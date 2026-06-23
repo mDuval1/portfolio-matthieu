@@ -1,0 +1,43 @@
+{
+  "site": {
+    "name": "Matthieu",
+    "role": "Architect"
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero": {
+      "title": "Designing spaces that breathe",
+      "description": "Architecture that pairs light, material and restraint. A selection of built and conceptual work.",
+      "ctaPrimary": "View projects",
+      "ctaSecondary": "Get in touch"
+    },
+    "selected": {
+      "title": "Selected work",
+      "description": "A few projects that capture how I think about form, function and place."
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Built and conceptual work, from private homes to public space."
+  },
+  "about": {
+    "title": "About",
+    "description": "A young architect working at the intersection of craft, context and care."
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "For commissions, collaborations or a coffee — reach out.",
+    "email": "Email"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "language": {
+    "switch": "Change language"
+  }
+}

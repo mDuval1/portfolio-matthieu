@@ -1,0 +1,43 @@
+{
+  "site": {
+    "name": "Matthieu",
+    "role": "Architecte"
+  },
+  "nav": {
+    "home": "Accueil",
+    "projects": "Projets",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero": {
+      "title": "Concevoir des espaces qui respirent",
+      "description": "Une architecture qui associe lumière, matière et sobriété. Une sélection de projets construits et conceptuels.",
+      "ctaPrimary": "Voir les projets",
+      "ctaSecondary": "Me contacter"
+    },
+    "selected": {
+      "title": "Projets sélectionnés",
+      "description": "Quelques projets qui révèlent ma façon de penser la forme, l'usage et le lieu."
+    }
+  },
+  "projects": {
+    "title": "Projets",
+    "description": "Travaux construits et conceptuels, de la maison privée à l'espace public."
+  },
+  "about": {
+    "title": "À propos",
+    "description": "Un jeune architecte à la croisée du métier, du contexte et de l'attention."
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Pour une commande, une collaboration ou un café — écrivez-moi.",
+    "email": "E-mail"
+  },
+  "footer": {
+    "rights": "Tous droits réservés."
+  },
+  "language": {
+    "switch": "Changer de langue"
+  }
+}
