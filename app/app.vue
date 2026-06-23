@@ -4,7 +4,11 @@ const head = useLocaleHead()
 
 useHead({
   htmlAttrs: { lang: () => locale.value },
-  link: [{ rel: 'icon', href: '/favicon.ico' }, ...(head.value.link ?? [])],
+  link: [
+    { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+    { rel: 'icon', sizes: '32x32', href: '/favicon.ico' },
+    ...(head.value.link ?? [])
+  ],
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ...(head.value.meta ?? [])
