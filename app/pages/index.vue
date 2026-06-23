@@ -1,38 +1,31 @@
 <script setup lang="ts">
 const { t } = useI18n()
-const localePath = useLocalePath()
 
 useSeoMeta({
-  title: () => t('title')
+  title: () => t('title'),
+  description: () => t('hero.tagline')
 })
 </script>
 
 <template>
   <div>
-    <UPageHero
-      :title="t('hero.title')"
-      :description="t('hero.description')"
-      :links="[
-        {
-          label: t('cta.projects'),
-          to: localePath('projects'),
-          trailingIcon: 'i-lucide-arrow-right',
-          size: 'xl'
-        },
-        {
-          label: t('cta.contact'),
-          to: localePath('contact'),
-          size: 'xl',
-          color: 'neutral',
-          variant: 'subtle'
-        }
-      ]"
-    />
+    <!-- Hero — left-aligned editorial wordmark -->
+    <UPageSection :ui="{ container: 'pt-16 pb-8 sm:pt-24 sm:pb-12' }">
+      <div class="max-w-3xl">
+        <h1 class="font-serif text-5xl text-highlighted tracking-tight sm:text-6xl lg:text-7xl">
+          {{ t('hero.title') }}
+        </h1>
+        <p class="mt-6 max-w-xl text-lg text-muted">
+          {{ t('hero.tagline') }}
+        </p>
+      </div>
+    </UPageSection>
 
-    <UPageSection
-      :title="t('selected.title')"
-      :description="t('selected.description')"
-    />
+    <!-- Carousel of projects -->
+    <CarouselSection />
+
+    <!-- Portfolio teaser (link / excerpts) -->
+    <PortfolioTeaser />
   </div>
 </template>
 
@@ -41,31 +34,15 @@ useSeoMeta({
   "en": {
     "title": "Home",
     "hero": {
-      "title": "Designing spaces that breathe",
-      "description": "Architecture that pairs light, material and restraint. A selection of built and conceptual work."
-    },
-    "cta": {
-      "projects": "View projects",
-      "contact": "Get in touch"
-    },
-    "selected": {
-      "title": "Selected work",
-      "description": "A few projects that capture how I think about form, function and place."
+      "title": "Matthieu Duval, architect",
+      "tagline": "Architecture between craft, context and care — a selection of built and conceptual work."
     }
   },
   "fr": {
     "title": "Accueil",
     "hero": {
-      "title": "Concevoir des espaces qui respirent",
-      "description": "Une architecture qui associe lumière, matière et sobriété. Une sélection de projets construits et conceptuels."
-    },
-    "cta": {
-      "projects": "Voir les projets",
-      "contact": "Me contacter"
-    },
-    "selected": {
-      "title": "Projets sélectionnés",
-      "description": "Quelques projets qui révèlent ma façon de penser la forme, l'usage et le lieu."
+      "title": "Matthieu Duval, architecte",
+      "tagline": "Une architecture entre métier, contexte et attention — une sélection de projets construits et conceptuels."
     }
   }
 }

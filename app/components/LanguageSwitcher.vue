@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import type { DropdownMenuItem } from '@nuxt/ui'
 
-const { locale, locales, t } = useI18n()
-const switchLocalePath = useSwitchLocalePath()
+const { locale, locales, setLocale, t } = useI18n()
 
+// setLocale() writes the i18n_redirected cookie *then* navigates, so the
+// default-locale redirect guard on "/" no longer bounces back. A plain
+// switchLocalePath link changed the URL but left the cookie stale.
 const items = computed<DropdownMenuItem[]>(() =>
   locales.value.map(l => ({
     label: l.name ?? l.code,
-    to: switchLocalePath(l.code),
-    checked: l.code === locale.value,
-    type: 'checkbox' as const
+    trailingIcon: l.code === locale.value ? 'i-lucide-check' : undefined,
+    onSelect: () => setLocale(l.code)
   }))
 )
 </script>

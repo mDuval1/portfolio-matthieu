@@ -22,3 +22,7 @@ logs
 .env
 .env.*
 !.env.example
+
+# Vercel CLI (project link + local build output)
+.vercel
+.env*

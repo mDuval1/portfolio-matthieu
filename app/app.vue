@@ -24,13 +24,9 @@ useSeoMeta({
 
 <template>
   <UApp>
-    <AppHeader />
-
-    <UMain>
+    <NuxtLayout>
       <NuxtPage />
-    </UMain>
-
-    <AppFooter />
+    </NuxtLayout>
   </UApp>
 </template>
 

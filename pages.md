@@ -7,4 +7,3 @@ Pages:
 - /about (bio + contact)
 - /projects/<project-name>
 - /projects/ (home page of projects)
-- 

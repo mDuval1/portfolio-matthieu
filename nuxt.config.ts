@@ -1,10 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/ui',
-    '@nuxtjs/i18n'
-  ],
+  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/i18n', '@nuxt/image'],
 
   devtools: {
     enabled: true
@@ -19,7 +15,20 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/fr'],
+      // crawlLinks discovers most routes from in-page links; these are listed
+      // explicitly as a safety net for both locales (incl. project detail pages).
+      routes: [
+        '/', '/fr',
+        '/portfolio', '/fr/portfolio',
+        '/sketches', '/fr/sketches',
+        '/resume', '/fr/resume',
+        '/about', '/fr/about',
+        '/portfolio/philopolis', '/fr/portfolio/philopolis',
+        '/portfolio/bahanaaue', '/fr/portfolio/bahanaaue',
+        '/portfolio/palimpseste', '/fr/portfolio/palimpseste',
+        '/portfolio/pesanteur-grace', '/fr/portfolio/pesanteur-grace',
+        '/portfolio/revelation', '/fr/portfolio/revelation'
+      ],
       failOnError: false
     }
   },
@@ -47,5 +56,12 @@ export default defineNuxtConfig({
       cookieKey: 'i18n_redirected',
       redirectOn: 'root'
     }
+  },
+
+  // Responsive WebP variants generated at `nuxt generate` (IPX provider, sharp).
+  // Source images are already WebP from scripts/import-visuals.sh.
+  image: {
+    format: ['webp'],
+    quality: 70
   }
 })
