@@ -23,7 +23,18 @@ const items = computed<DropdownMenuItem[]>(() =>
       icon="i-lucide-languages"
       color="neutral"
       variant="ghost"
-      :aria-label="t('language.switch')"
+      :aria-label="t('switch')"
     />
   </UDropdownMenu>
 </template>
+
+<i18n lang="json">
+{
+  "en": {
+    "switch": "Change language"
+  },
+  "fr": {
+    "switch": "Changer de langue"
+  }
+}
+</i18n>

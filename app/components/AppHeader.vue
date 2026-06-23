@@ -5,10 +5,10 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 
 const items = computed<NavigationMenuItem[]>(() => [
-  { label: t('nav.home'), to: localePath('index') },
-  { label: t('nav.projects'), to: localePath('projects') },
-  { label: t('nav.about'), to: localePath('about') },
-  { label: t('nav.contact'), to: localePath('contact') }
+  { label: t('home'), to: localePath('index') },
+  { label: t('projects'), to: localePath('projects') },
+  { label: t('about'), to: localePath('about') },
+  { label: t('contact'), to: localePath('contact') }
 ])
 </script>
 
@@ -34,3 +34,20 @@ const items = computed<NavigationMenuItem[]>(() => [
     </template>
   </UHeader>
 </template>
+
+<i18n lang="json">
+{
+  "en": {
+    "home": "Home",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "fr": {
+    "home": "Accueil",
+    "projects": "Projets",
+    "about": "À propos",
+    "contact": "Contact"
+  }
+}
+</i18n>

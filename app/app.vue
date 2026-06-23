@@ -12,8 +12,8 @@ useHead({
 })
 
 useSeoMeta({
-  titleTemplate: title => title ? `${title} — ${t('site.name')}` : `${t('site.name')} · ${t('site.role')}`,
-  description: () => t('home.hero.description'),
+  titleTemplate: title => title ? `${title} — ${t('name')}` : `${t('name')} · ${t('role')}`,
+  description: () => t('description'),
   ogType: 'website'
 })
 </script>
@@ -29,3 +29,18 @@ useSeoMeta({
     <AppFooter />
   </UApp>
 </template>
+
+<i18n lang="json">
+{
+  "en": {
+    "name": "Matthieu",
+    "role": "Architect",
+    "description": "Architecture that pairs light, material and restraint — selected built and conceptual work by Matthieu, architect."
+  },
+  "fr": {
+    "name": "Matthieu",
+    "role": "Architecte",
+    "description": "Une architecture qui associe lumière, matière et sobriété — sélection de projets construits et conceptuels de Matthieu, architecte."
+  }
+}
+</i18n>

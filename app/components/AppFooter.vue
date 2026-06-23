@@ -7,7 +7,7 @@ const year = new Date().getFullYear()
   <UFooter>
     <template #left>
       <p class="text-sm text-muted">
-        © {{ year }} {{ t('site.name') }} — {{ t('footer.rights') }}
+        © {{ year }} {{ t('name') }} — {{ t('rights') }}
       </p>
     </template>
 
@@ -16,3 +16,16 @@ const year = new Date().getFullYear()
     </template>
   </UFooter>
 </template>
+
+<i18n lang="json">
+{
+  "en": {
+    "name": "Matthieu",
+    "rights": "All rights reserved."
+  },
+  "fr": {
+    "name": "Matthieu",
+    "rights": "Tous droits réservés."
+  }
+}
+</i18n>
