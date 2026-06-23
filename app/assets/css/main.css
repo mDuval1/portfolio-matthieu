@@ -1,6 +1,134 @@
+/* Matthieu Duval — design-system theme for Nuxt UI 4 / Tailwind 4.
+   Ported from the Claude Design project (tokens/*.css):
+   warm earthen palette (paper / ink / clay / sage / blueprint / timber),
+   a three-voice type system (Playfair Display · Roboto · Space Mono),
+   and near-square drafting corners. */
+
+/* Font files are auto-detected from the families below and self-hosted
+   by @nuxt/fonts (bundled with Nuxt UI) — no Google CDN request needed. */
 @import "tailwindcss";
 @import "@nuxt/ui";
 
 @theme static {
-  --font-sans: 'Public Sans', sans-serif;
+  /* ---- Type: serif display, sans body, mono drafting layer ---- */
+  --font-sans: 'Roboto', system-ui, 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* ---- Warm neutral (paper → ink) — drives Nuxt UI `neutral` ---- */
+  --color-sand-50: #faf7f1;   /* paper-00 — page */
+  --color-sand-100: #f4efe6;  /* paper-01 — card */
+  --color-sand-200: #ebe4d6;  /* paper-02 — inset */
+  --color-sand-300: #ddd3c1;  /* paper-03 — kraft fill */
+  --color-sand-400: #b3ac9a;  /* ink-04 — faint */
+  --color-sand-500: #8a8473;  /* ink-03 — captions */
+  --color-sand-600: #5c5648;  /* ink-02 — secondary */
+  --color-sand-700: #322e27;  /* ink-01 — body */
+  --color-sand-800: #25221c;
+  --color-sand-900: #1c1a16;  /* ink-00 — headings / poché */
+  --color-sand-950: #110f0c;
+
+  /* ---- Clay / terracotta — primary accent ---- */
+  --color-clay-50: #faf0eb;
+  --color-clay-100: #f4ddd2;
+  --color-clay-200: #e9bca8;
+  --color-clay-300: #d98e6f;   /* clay-02 — tint */
+  --color-clay-400: #c66f4d;
+  --color-clay-500: #b65a3c;   /* clay-00 — accent */
+  --color-clay-600: #9c4429;   /* clay-01 — pressed / hover */
+  --color-clay-700: #7e3621;
+  --color-clay-800: #5f2a1b;
+  --color-clay-900: #4a2216;
+  --color-clay-950: #2a120c;
+
+  /* ---- Sage / eucalyptus — drafting overlay (secondary) ---- */
+  --color-sage-50: #f1f4f1;
+  --color-sage-100: #e0e6df;
+  --color-sage-200: #c3cdc2;
+  --color-sage-300: #a6b3a4;   /* sage-02 — tint */
+  --color-sage-400: #889a87;
+  --color-sage-500: #6f8475;   /* sage-00 */
+  --color-sage-600: #5b6e5b;
+  --color-sage-700: #51624f;   /* sage-01 — deep */
+  --color-sage-800: #3c4a3b;
+  --color-sage-900: #313d31;
+  --color-sage-950: #1d251d;
+
+  /* ---- Blueprint indigo — technical line-work (info) ---- */
+  --color-blueprint-50: #eef0f6;
+  --color-blueprint-100: #d8dcec;
+  --color-blueprint-200: #b3bbd9;
+  --color-blueprint-300: #7c88b0;  /* blueprint-02 — faint */
+  --color-blueprint-400: #4f5e93;
+  --color-blueprint-500: #2c3a72;  /* blueprint-00 */
+  --color-blueprint-600: #243160;
+  --color-blueprint-700: #1d2750;  /* blueprint-01 — deep */
+  --color-blueprint-800: #161d3d;
+  --color-blueprint-900: #11162e;
+  --color-blueprint-950: #0a0d1b;
+
+  /* ---- Timber / ochre — material reference ---- */
+  --color-timber-50: #f9f2e7;
+  --color-timber-100: #f0e2c8;
+  --color-timber-200: #e4cb9e;
+  --color-timber-300: #d9b682;  /* timber-02 — tint */
+  --color-timber-400: #c8a066;
+  --color-timber-500: #b98a4e;  /* timber-00 */
+  --color-timber-600: #a0743f;
+  --color-timber-700: #8f6635;  /* timber-01 — deep */
+  --color-timber-800: #6f4f2a;
+  --color-timber-900: #5a4023;
+  --color-timber-950: #332313;
+}
+
+/* ============================================================
+   Nuxt UI semantic tokens — bound to the warm palette so every
+   component (UButton, UCard, UInput, nav, …) renders in-brand.
+   ============================================================ */
+:root {
+  /* Drafting corners: square by default, 2px is the most softening. */
+  --ui-radius: 2px;
+
+  /* Surfaces — warm paper, never pure white */
+  --ui-bg: var(--color-sand-50);
+  --ui-bg-muted: var(--color-sand-100);
+  --ui-bg-elevated: var(--color-sand-200);
+  --ui-bg-accented: var(--color-sand-300);
+  --ui-bg-inverted: var(--color-sand-900);
+
+  /* Text — warm charcoal ink, never pure black */
+  --ui-text-dimmed: var(--color-sand-400);
+  --ui-text-muted: var(--color-sand-500);
+  --ui-text-toned: var(--color-sand-600);
+  --ui-text: var(--color-sand-700);
+  --ui-text-highlighted: var(--color-sand-900);
+  --ui-text-inverted: var(--color-sand-50);
+
+  /* Architectural hairlines, not heavy boxes */
+  --ui-border: color-mix(in srgb, var(--color-sand-900) 14%, transparent);
+  --ui-border-muted: color-mix(in srgb, var(--color-sand-900) 10%, transparent);
+  --ui-border-accented: color-mix(in srgb, var(--color-sand-900) 28%, transparent);
+  --ui-border-inverted: var(--color-sand-900);
+}
+
+/* Dark mode: one warm ink surface (matches the contact band) so the
+   colour-mode toggle stays coherent — the brand itself is light-led. */
+.dark {
+  --ui-bg: var(--color-sand-950);
+  --ui-bg-muted: var(--color-sand-900);
+  --ui-bg-elevated: var(--color-sand-800);
+  --ui-bg-accented: var(--color-sand-700);
+  --ui-bg-inverted: var(--color-sand-50);
+
+  --ui-text-dimmed: var(--color-sand-600);
+  --ui-text-muted: var(--color-sand-500);
+  --ui-text-toned: var(--color-sand-400);
+  --ui-text: var(--color-sand-300);
+  --ui-text-highlighted: var(--color-sand-50);
+  --ui-text-inverted: var(--color-sand-950);
+
+  --ui-border: color-mix(in srgb, var(--color-sand-50) 14%, transparent);
+  --ui-border-muted: color-mix(in srgb, var(--color-sand-50) 10%, transparent);
+  --ui-border-accented: color-mix(in srgb, var(--color-sand-50) 24%, transparent);
+  --ui-border-inverted: var(--color-sand-50);
 }
