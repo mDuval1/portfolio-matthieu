@@ -6,7 +6,7 @@ export const contact = {
   email: 'matthieuduval-50@outlook.fr',
   phone: '+33 6 51 88 91 29',
   phoneHref: 'tel:+33651889129',
-  linkedin: 'https://www.linkedin.com/in/matthieu-duval',
+  linkedin: 'https://www.linkedin.com/in/matthieu-duval-44264323a/',
   linkedinHandle: 'matthieu-duval'
 }
 

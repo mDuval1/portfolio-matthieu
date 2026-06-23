@@ -7,7 +7,7 @@ useSeoMeta({
 })
 
 const cards = computed(() =>
-  projectsByOrder().map((p) => {
+  projectsByDate().map((p) => {
     const text = projectText(p.slug, locale.value)
     return {
       slug: p.slug,

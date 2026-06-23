@@ -128,10 +128,14 @@ export const projects: Project[] = [
 
 export const projectsByOrder = () => [...projects].sort((a, b) => a.order - b.order)
 
+// Latest year first; import order (01–05) breaks ties.
+export const projectsByDate = () =>
+  [...projects].sort((a, b) => Number(b.year) - Number(a.year) || a.order - b.order)
+
 export const getProject = (slug: string) => projects.find(p => p.slug === slug)
 
 export const adjacentProjects = (slug: string) => {
-  const ordered = projectsByOrder()
+  const ordered = projectsByDate()
   const i = ordered.findIndex(p => p.slug === slug)
   if (i === -1) {
     return { prev: undefined, next: undefined }

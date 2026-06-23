@@ -1,17 +1,16 @@
 <script setup lang="ts">
 const { t, locale } = useI18n()
 
-// One card per curated carousel select, preserving project order (the wireframe's
-// "project 1 / subproject 1 …" row).
+// One card per project (first curated carousel select), latest year first.
 const cards = computed(() =>
-  projectsByOrder().flatMap(p =>
-    p.carousel.map(file => ({
+  projectsByDate()
+    .filter(p => p.carousel.length > 0)
+    .map(p => ({
       slug: p.slug,
-      src: carouselImg(file),
+      src: carouselImg(p.carousel[0]!),
       title: projectText(p.slug, locale.value).title,
       meta: p.year
     }))
-  )
 )
 </script>
 
