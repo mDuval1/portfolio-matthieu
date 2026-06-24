@@ -2,6 +2,13 @@
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/i18n', '@nuxt/image'],
 
+  // Light-only site: disable Nuxt UI's color mode entirely. This skips the
+  // @nuxtjs/color-mode install (no inline <head> theme script, no `.dark`
+  // toggling) and registers stub `useColorMode` composables instead.
+  ui: {
+    colorMode: false
+  },
+
   devtools: {
     enabled: true
   },
@@ -56,12 +63,6 @@ export default defineNuxtConfig({
       cookieKey: 'i18n_redirected',
       redirectOn: 'root'
     }
-  },
-
-  // Default to the light (paper) theme; the header toggle still switches +
-  // persists. Without this, preference is `system` → dark on dark-mode OSes.
-  colorMode: {
-    preference: 'light'
   },
 
   // Responsive WebP variants. MUST be `ipxStatic` for SSG: it bakes the
