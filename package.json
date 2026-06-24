@@ -11,8 +11,8 @@
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
     "verify:lfs": "node scripts/check-lfs.mjs",
-    "deploy:preview": "vercel build && vercel deploy --prebuilt",
-    "deploy:prod": "vercel build --prod && vercel deploy --prebuilt --prod"
+    "deploy:preview": "bash scripts/deploy.sh preview",
+    "deploy:prod": "bash scripts/deploy.sh prod"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.114",

@@ -58,9 +58,18 @@ export default defineNuxtConfig({
     }
   },
 
-  // Responsive WebP variants generated at `nuxt generate` (IPX provider, sharp).
-  // Source images are already WebP from scripts/import-visuals.sh.
+  // Default to the light (paper) theme; the header toggle still switches +
+  // persists. Without this, preference is `system` → dark on dark-mode OSes.
+  colorMode: {
+    preference: 'light'
+  },
+
+  // Responsive WebP variants. MUST be `ipxStatic` for SSG: it bakes the
+  // /_ipx/ variants into .output/public at `nuxt generate` (sharp, build-time).
+  // The default `ipx` provider serves them from a runtime server that does not
+  // exist on a static host → every <NuxtImg> 404s. Sources are already WebP.
   image: {
+    provider: 'ipxStatic',
     format: ['webp'],
     quality: 70
   }
