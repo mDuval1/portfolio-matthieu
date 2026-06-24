@@ -2,18 +2,18 @@
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/i18n', '@nuxt/image'],
 
+  devtools: {
+    enabled: true
+  },
+
+  css: ['~/assets/css/main.css'],
+
   // Light-only site: disable Nuxt UI's color mode entirely. This skips the
   // @nuxtjs/color-mode install (no inline <head> theme script, no `.dark`
   // toggling) and registers stub `useColorMode` composables instead.
   ui: {
     colorMode: false
   },
-
-  devtools: {
-    enabled: true
-  },
-
-  css: ['~/assets/css/main.css'],
 
   compatibilityDate: '2025-01-15',
 
@@ -65,12 +65,13 @@ export default defineNuxtConfig({
     }
   },
 
-  // Responsive WebP variants. MUST be `ipxStatic` for SSG: it bakes the
-  // /_ipx/ variants into .output/public at `nuxt generate` (sharp, build-time).
-  // The default `ipx` provider serves them from a runtime server that does not
-  // exist on a static host → every <NuxtImg> 404s. Sources are already WebP.
+  // Responsive WebP variants. For SSG the provider MUST be `ipxStatic`: it bakes
+  // the /_ipx/ variants into .output/public at `nuxt generate` (sharp, build-time),
+  // because a static host has no runtime IPX server to transform on the fly.
+  // In `dev` there is no build step, so `ipxStatic` serves nothing and every
+  // <NuxtImg> 404s — use the runtime `ipx` provider there instead so images show.
   image: {
-    provider: 'ipxStatic',
+    provider: process.env.NODE_ENV === 'production' ? 'ipxStatic' : 'ipx',
     format: ['webp'],
     quality: 70
   }
