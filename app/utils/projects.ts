@@ -6,6 +6,12 @@
 //
 // NOTE: `year` values are best-effort and should be confirmed by the owner.
 
+/** A string in both locales (used for per-image caption overrides). */
+export interface LocalizedText {
+  fr: string
+  en: string
+}
+
 export interface Project {
   /** url segment + i18n key + folder discriminator */
   slug: string
@@ -15,12 +21,21 @@ export interface Project {
   folder: string
   /** completion year (display + sort tiebreak) */
   year: string
+  /** end of the project timeframe as 'YYYY-MM' — drives the date sort */
+  endDate: string
   /** curated selects under /media/carousel (one card each on the homepage) */
   carousel: string[]
   /** hero image filename within the project folder */
   hero: string
   /** detail-page gallery image filenames within the project folder */
   gallery: string[]
+  /**
+   * Optional per-image caption overrides keyed by gallery filename, bilingual.
+   * When absent, the caption falls back to a humanized filename (see
+   * humanizeFilename). `text` is the lightbox side-panel paragraph — left empty
+   * until the owner supplies copy.
+   */
+  captions?: Record<string, { title?: LocalizedText, text?: LocalizedText }>
 }
 
 export const projects: Project[] = [
@@ -29,6 +44,7 @@ export const projects: Project[] = [
     order: 1,
     folder: '01-philopolis',
     year: '2026',
+    endDate: '2026-06',
     carousel: ['01-a.webp', '01-b.webp', '01-c.webp'],
     hero: 'perse-musee.webp',
     gallery: [
@@ -52,6 +68,7 @@ export const projects: Project[] = [
     order: 2,
     folder: '02-bahanaaue',
     year: '2024',
+    endDate: '2024-07',
     carousel: ['02-a.webp', '02-b.webp'],
     hero: 'front-up-shot-002.webp',
     gallery: [
@@ -69,7 +86,8 @@ export const projects: Project[] = [
     slug: 'palimpseste',
     order: 3,
     folder: '03-palimpseste',
-    year: '2025',
+    year: '2023',
+    endDate: '2023-03',
     carousel: ['03-a.webp'],
     hero: 'collage-exterieur-01.webp',
     gallery: [
@@ -82,7 +100,8 @@ export const projects: Project[] = [
     slug: 'pesanteur-grace',
     order: 4,
     folder: '04-pesanteur-grace',
-    year: '2023',
+    year: '2024',
+    endDate: '2024-03',
     carousel: ['04-a.webp'],
     hero: 'perspective-exterieure.webp',
     gallery: [
@@ -100,7 +119,8 @@ export const projects: Project[] = [
     slug: 'revelation',
     order: 5,
     folder: '05-revelation',
-    year: '2024',
+    year: '2025',
+    endDate: '2025-07',
     carousel: ['05-a.webp', '05-b.webp'],
     hero: 'atrium-000.webp',
     gallery: [
@@ -128,9 +148,9 @@ export const projects: Project[] = [
 
 export const projectsByOrder = () => [...projects].sort((a, b) => a.order - b.order)
 
-// Latest year first; import order (01–05) breaks ties.
+// Most recent first by end of timeframe ('YYYY-MM'); import order breaks ties.
 export const projectsByDate = () =>
-  [...projects].sort((a, b) => Number(b.year) - Number(a.year) || a.order - b.order)
+  [...projects].sort((a, b) => b.endDate.localeCompare(a.endDate) || a.order - b.order)
 
 export const getProject = (slug: string) => projects.find(p => p.slug === slug)
 
@@ -152,7 +172,9 @@ export type Locale = 'en' | 'fr'
 
 export interface ProjectText {
   title: string
+  typology: string
   location: string
+  dates: string
   summary: string
   description: string
 }
@@ -161,13 +183,17 @@ const projectContent: Record<string, Record<Locale, ProjectText>> = {
   'philopolis': {
     en: {
       title: 'Philopolis',
+      typology: 'Cultural facility',
       location: 'Philadelphia, USA',
+      dates: 'Sept 2025 – June 2026',
       summary: 'A regeneration of an occupied heritage site — archives, museum and assembly woven into the existing fabric.',
       description: 'Final-year thesis project. Philopolis treats the city as a living archive: a sequence of public rooms — consultation halls, a double-height reading room, a museum and a crowning amphitheatre — is grafted onto an occupied historic site, negotiating preservation and new construction.'
     },
     fr: {
       title: 'Philopolis',
-      location: 'Philadelphie, USA',
+      typology: 'Équipement culturel',
+      location: 'États-Unis, Philadelphie',
+      dates: 'Septembre 25 – Juin 26',
       summary: 'Régénération d\'un site patrimonial occupé — archives, musée et assemblée tissés dans le bâti existant.',
       description: 'Projet de fin d\'étude. Philopolis traite la ville comme une archive vivante : une séquence de salles publiques — salles de consultation, salle de lecture double hauteur, musée et amphithéâtre de couronnement — se greffe sur un site historique occupé, négociant conservation et construction neuve.'
     }
@@ -175,13 +201,17 @@ const projectContent: Record<string, Record<Locale, ProjectText>> = {
   'bahanaaue': {
     en: {
       title: 'Bahanaaue',
-      location: 'Banaue, Philippines',
+      typology: 'Tourist accommodation',
+      location: 'Luzon, Philippines',
+      dates: 'Apr – July 2024',
       summary: 'A lodge terraced into the rice fields of Banaue — a TERRAVIVA competition entry.',
       description: 'Competition proposal (TERRAVIVA) for a small lodge set into the Banaue rice terraces. The section steps with the land so that roofs become paths and the building all but disappears into the cultivated slope.'
     },
     fr: {
       title: 'Bahanaaue',
-      location: 'Banaue, Philippines',
+      typology: 'Hébergement touristique',
+      location: 'Philippines, Luzon',
+      dates: 'Avr – Juillet 24',
       summary: 'Un refuge en terrasses dans les rizières de Banaue — un projet de concours TERRAVIVA.',
       description: 'Proposition de concours (TERRAVIVA) pour un petit refuge inscrit dans les rizières en terrasses de Banaue. La coupe épouse le terrain : les toitures deviennent des cheminements et le bâtiment s\'efface dans la pente cultivée.'
     }
@@ -189,13 +219,17 @@ const projectContent: Record<string, Record<Locale, ProjectText>> = {
   'palimpseste': {
     en: {
       title: 'Palimpseste',
-      location: '',
+      typology: 'Semi-collective housing',
+      location: 'Meyzieu, France',
+      dates: 'Feb – Mar 2023',
       summary: 'An adaptive-reuse study read as a palimpsest — new structure written over the traces of the old.',
       description: 'A constructive study in adaptive reuse: the existing fabric is kept as a substrate onto which a light new structure is written, in the spirit of Atelier Bow-Wow\'s drawn investigations.'
     },
     fr: {
       title: 'Palimpseste',
-      location: '',
+      typology: 'Logements semi-collectif',
+      location: 'France, Meyzieu',
+      dates: 'Fév – Mars 2023',
       summary: 'Une étude de réemploi lue comme un palimpseste — une structure neuve écrite sur les traces de l\'ancien.',
       description: 'Étude constructive sur le réemploi : le bâti existant est conservé comme substrat sur lequel s\'écrit une structure neuve et légère, dans l\'esprit des investigations dessinées de l\'Atelier Bow-Wow.'
     }
@@ -203,13 +237,17 @@ const projectContent: Record<string, Record<Locale, ProjectText>> = {
   'pesanteur-grace': {
     en: {
       title: 'Weight and Grace',
-      location: '',
+      typology: 'Exhibition space, artist studios & housing',
+      location: 'Vaux-en-Velin, France',
+      dates: 'Feb – Mar 2024',
       summary: 'Workshop ateliers poised between mass and lightness, after Simone Weil.',
       description: 'Named after Simone Weil, the project sets a heavy load-bearing ground against a grafted, lighter structure above — ateliers and workshops organised around the tension between gravity and grace.'
     },
     fr: {
       title: 'La Pesanteur et la Grâce',
-      location: '',
+      typology: 'Espace d\'exposition, ateliers et logements d\'artistes',
+      location: 'France, Vaux-en-Velin',
+      dates: 'Fév – Mars 2024',
       summary: 'Des ateliers en équilibre entre masse et légèreté, d\'après Simone Weil.',
       description: 'D\'après Simone Weil, le projet oppose un socle porteur massif à une structure greffée plus légère — ateliers et workshops organisés autour de la tension entre pesanteur et grâce.'
     }
@@ -217,13 +255,17 @@ const projectContent: Record<string, Record<Locale, ProjectText>> = {
   'revelation': {
     en: {
       title: 'Revelation',
-      location: '',
+      typology: 'Public-access building (ERP)',
+      location: 'Villeneuve-Saint-Georges, France',
+      dates: 'Sep 2024 – July 2025',
       summary: 'An atrium-centred complex of temple, coworking and lodging, resolved to structure and services.',
       description: 'A large mixed-use complex organised around a top-lit atrium — temple, coworking, kitchens and lodging — developed from render to structure, HVAC and plumbing as a full technical set.'
     },
     fr: {
       title: 'Révélation',
-      location: '',
+      typology: 'Établissement Recevant du Public (ERP)',
+      location: 'France, Villeneuve-Saint-Georges',
+      dates: 'Sep 24 – Juillet 25',
       summary: 'Un complexe organisé autour d\'un atrium — temple, coworking et hébergement — résolu jusqu\'à la structure et les fluides.',
       description: 'Un grand programme mixte organisé autour d\'un atrium zénithal — temple, coworking, cuisines et hébergement — développé du rendu jusqu\'à la structure, la CVC et la plomberie, en un jeu technique complet.'
     }
@@ -233,7 +275,7 @@ const projectContent: Record<string, Record<Locale, ProjectText>> = {
 export const projectText = (slug: string, locale: string): ProjectText => {
   const entry = projectContent[slug]
   if (!entry) {
-    return { title: slug, location: '', summary: '', description: '' }
+    return { title: slug, typology: '', location: '', dates: '', summary: '', description: '' }
   }
   return entry[locale === 'fr' ? 'fr' : 'en']
 }

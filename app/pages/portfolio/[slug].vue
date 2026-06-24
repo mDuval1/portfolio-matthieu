@@ -13,6 +13,29 @@ if (!project.value) {
 const text = computed(() => projectText(slug.value, locale.value))
 const siblings = computed(() => adjacentProjects(slug.value))
 
+// Meta line: location · typology · timeframe (omit blanks).
+const metaLine = computed(() =>
+  [text.value.location, text.value.typology, text.value.dates].filter(Boolean).join(' · ')
+)
+
+// Gallery items, in source order. Caption + lightbox text come from an optional
+// bilingual per-image override, falling back to a humanized filename.
+const tr = (l?: LocalizedText) => (l ? (locale.value === 'fr' ? l.fr : l.en) : undefined)
+const gallery = computed(() => {
+  const p = project.value!
+  return p.gallery.map((file) => {
+    const override = p.captions?.[file]
+    return {
+      file,
+      src: projectImg(p.folder, file),
+      title: tr(override?.title) ?? humanizeFilename(file),
+      text: tr(override?.text)
+    }
+  })
+})
+
+const lightboxIndex = ref(-1)
+
 useSeoMeta({
   title: () => text.value.title,
   description: () => text.value.summary
@@ -27,39 +50,45 @@ useSeoMeta({
         :description="text.summary"
       >
         <template #headline>
-          <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-muted">
-            <span>{{ project.year }}</span>
-            <span v-if="text.location">·</span>
-            <span v-if="text.location">{{ text.location }}</span>
-          </div>
+          <p
+            v-if="metaLine"
+            class="font-sans text-sm uppercase tracking-wider text-muted"
+          >
+            {{ metaLine }}
+          </p>
         </template>
       </UPageHeader>
 
       <UPageBody>
-        <p
-          v-if="text.description"
-          class="max-w-2xl text-pretty text-muted"
-        >
-          {{ text.description }}
-        </p>
-
-        <UPageColumns class="mt-10">
-          <div
-            v-for="(file, i) in project.gallery"
-            :key="file"
-            class="overflow-hidden rounded-[--ui-radius] border border-default"
+        <!-- Chaptered grid: strict source order, permanent captions, no obscuring hover. -->
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+          <figure
+            v-for="(item, i) in gallery"
+            :key="item.file"
           >
-            <NuxtImg
-              :src="projectImg(project.folder, file)"
-              :alt="`${text.title} — ${i + 1}`"
-              width="900"
-              format="webp"
-              loading="lazy"
-              sizes="100vw sm:50vw lg:33vw"
-              class="w-full"
-            />
-          </div>
-        </UPageColumns>
+            <button
+              type="button"
+              class="group block w-full cursor-zoom-in"
+              @click="lightboxIndex = i"
+            >
+              <div class="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[--ui-radius] border border-default bg-elevated transition-colors group-hover:border-accented">
+                <NuxtImg
+                  :src="item.src"
+                  :alt="item.title"
+                  width="900"
+                  fit="contain"
+                  format="webp"
+                  loading="lazy"
+                  sizes="100vw sm:50vw lg:33vw"
+                  class="h-full w-full object-contain"
+                />
+              </div>
+              <figcaption class="mt-2 text-left text-xs text-dimmed">
+                {{ item.title }}
+              </figcaption>
+            </button>
+          </figure>
+        </div>
 
         <USeparator class="my-12" />
 
@@ -89,6 +118,11 @@ useSeoMeta({
         </div>
       </UPageBody>
     </UPage>
+
+    <GalleryLightbox
+      v-model="lightboxIndex"
+      :items="gallery"
+    />
   </UContainer>
 </template>
 

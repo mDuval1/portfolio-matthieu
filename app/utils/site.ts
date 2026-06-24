@@ -13,3 +13,6 @@ export const contact = {
 // Locale-keyed document paths under /media (see scripts/import-visuals.sh).
 export const cvPdf = { en: '/media/cv/cv-matthieu-duval-en.pdf', fr: '/media/cv/cv-matthieu-duval-fr.pdf' }
 export const portfolioPdf = { en: '/media/pdf/portfolio-2026-en.pdf', fr: '/media/pdf/portfolio-2026-fr.pdf' }
+
+// Portfolio cover render, used as the homepage hero image (see import-visuals.sh).
+export const coverImg = '/media/cover/couverture-portfolio.webp'

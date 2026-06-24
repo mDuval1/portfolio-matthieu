@@ -47,6 +47,21 @@ convert_dir "05_REVELATION"              "public/media/projects/05-revelation"
 echo "### SKETCHES ###";  convert_dir "CROQUIS"         "public/media/sketches"
 echo "### CAROUSEL ###";  convert_dir "VISUELS CAROUSEL" "public/media/carousel"
 
+echo "### COVER (homepage hero — source sits directly in ~/Downloads) ###"
+COVER_SRC="$HOME/Downloads/Couverture Portfolio.png"
+COVER_OUT="$REPO/public/media/cover/couverture-portfolio.webp"
+if [ -f "$COVER_SRC" ]; then
+  mkdir -p "$REPO/public/media/cover"
+  rm -f "$COVER_OUT"
+  if magick "$COVER_SRC" -resize "${MAXEDGE}x${MAXEDGE}>" -quality "$Q" "$COVER_OUT" 2>/dev/null; then
+    printf '  %-44s -> %s (%s)\n' "Couverture Portfolio.png" "couverture-portfolio.webp" "$(du -h "$COVER_OUT" | cut -f1)"
+  else
+    printf '  !! FAILED: cover\n'
+  fi
+else
+  printf '  (cover source not found at %s — skipped)\n' "$COVER_SRC"
+fi
+
 echo "### FONTS (copy ttf as-is) ###"
 mkdir -p "$REPO/app/assets/fonts"
 cp -v "$SRC/FONTS/"*.ttf "$REPO/app/assets/fonts/" | sed 's/^/  /'

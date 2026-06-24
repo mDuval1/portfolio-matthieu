@@ -98,9 +98,10 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
     "title": "About",
     "description": "A young architect and civil engineer working at the intersection of craft, context and care.",
     "bio": [
-      "Matthieu Duval is a graduating architect (ENSAL, Lyon) and civil engineer (INSA Lyon), with a year at the Politecnico di Milano. His work moves between the drawn and the built — from heritage regeneration and adaptive reuse to international hospitality projects.",
-      "Trained as both an architect and an engineer, he is as comfortable resolving a structural section or a BIM model as he is composing a perspective. He is currently based in South-East Asia, working as a lead concept designer.",
-      "He is looking for a role as an architectural design coordinator / assistant design manager, where architecture, engineering and coordination meet."
+      "A graduate in architecture (ENSA Lyon — June 2026) and civil engineering (INSA Lyon — August 2024), with a year at the Politecnico di Milano, I work at the interface between the creativity of architectural design and the reality of engineering studies. I see my practice as a bridge between these two worlds, refusing any compromise between the poetry of a space and the demands of its feasibility.",
+      "A proponent of critical neo-regionalism and bioclimatic architecture, my design process always begins with a will to understand the environment in which — and for which — I build. The first ideas then take shape on tracing paper or on paper, giving form to the chosen approach. My strength lies in moving freely from one design medium to another: I work fluidly with drawing, the graphics tablet, digital modelling (Revit, Rhino), parametric modelling (Dynamo, Grasshopper), through to the use of the latest technologies (AI) in my workflows.",
+      "With 18 months of cumulative agency experience in South-East Asia across varied programmes, I have developed an autonomy and a versatility that translate into a strong capacity to adapt. My prior experience in project management and business development (Junior Enterprise) also lets me approach each project with a strategic, business-oriented vision.",
+      "Today I am preparing my return to South-East Asia, with a privileged anchor in HCMC, Vietnam. I am reaching out to international agencies seeking a cross-disciplinary profile — able to carry architectural design, the resolution of complex details and technical coordination — where architecture and engineering speak to one another in the service of exceptional projects."
     ],
     "contact": "Contact",
     "viewCv": "Read the full CV",
@@ -111,9 +112,10 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
     "title": "À propos",
     "description": "Un jeune architecte et ingénieur en génie civil à la croisée du métier, du contexte et de l'attention.",
     "bio": [
-      "Matthieu Duval est architecte en fin d'études (ENSAL, Lyon) et ingénieur en génie civil (INSA Lyon), après une année au Politecnico di Milano. Son travail se déploie entre le dessiné et le construit — de la régénération patrimoniale et du réemploi aux projets hôteliers internationaux.",
-      "Formé à la fois comme architecte et comme ingénieur, il est aussi à l'aise pour résoudre une coupe de structure ou un modèle BIM que pour composer une perspective. Il est actuellement basé en Asie du Sud-Est, comme architecte concepteur principal.",
-      "Il recherche un poste de coordinateur d'études architecturales / assistant design manager, là où architecture, ingénierie et coordination se rencontrent."
+      "Diplômé en architecture (ENSA Lyon - juin 2026) et en génie civil (INSA Lyon août 2024), avec un parcours enrichi par une année à l'école Politecnico di Milano, j'évolue à l'interface entre la créativité de la conception architecturale et la réalité des études d'ingénierie. Je conçois ma pratique comme un pont entre ces deux mondes, refusant tout compromis entre la poésie d'un espace et l'exigence de sa faisabilité.",
+      "Adepte du néo-régionalisme critique et de l'architecture bioclimatique, mon processus de conception commence systématiquement par une volonté de comprendre l'environnement dans lequel et pour lequel je construis. Les premières idées naissent ensuite sur le calque ou le papier, matérialisation du parti pris et des idées retenus. Ma force réside dans la capacité de passer d'un support de conception à l'autre. Je manie librement le dessin, la tablette graphique, la modélisation numérique (Revit, Rhino), la modélisation paramétrique (Dynamo, Grasshopper) jusqu'à l'emploi des dernières technologies (IA) dans mes flux de travail.",
+      "Fort de 18 mois d'expérience cumulée en agence en Asie du Sud-Est, sur des programmes variés, j'ai développé une autonomie et une transversalité qui s'incarnent dans une grande capacité d'adaptation. Mon expérience préalable en management de projet et développement commercial (Junior-Entreprise) me permet en outre d'aborder chaque projet avec une vision stratégique et « business-oriented ».",
+      "Aujourd'hui, je prépare mon retour en Asie du Sud-Est, avec un ancrage privilégié à HCMC au Vietnam. Je m'adresse aux agences internationales à la recherche d'un profil transversal — capable d'assurer la conception architecturale, la résolution de détails complexes et la coordination technique — là où l'architecture et l'ingénierie dialoguent au service de projets d'exception."
     ],
     "contact": "Contact",
     "viewCv": "Lire le CV complet",

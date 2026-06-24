@@ -30,7 +30,12 @@ const items = computed<NavigationMenuItem[]>(() => [
       </NuxtLinkLocale>
     </template>
 
-    <UNavigationMenu :items="items" />
+    <!-- content-orientation=vertical → Portfolio dropdown is a single column
+         (horizontal default lays children out in two columns). -->
+    <UNavigationMenu
+      :items="items"
+      content-orientation="vertical"
+    />
 
     <template #right>
       <LanguageSwitcher />

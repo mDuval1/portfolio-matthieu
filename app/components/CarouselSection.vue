@@ -1,38 +1,50 @@
 <script setup lang="ts">
 const { t, locale } = useI18n()
 
-// One card per project (first curated carousel select), latest year first.
-const cards = computed(() =>
-  projectsByDate()
-    .filter(p => p.carousel.length > 0)
-    .map(p => ({
+// Every curated carousel select becomes its own slide, tagged with its project's
+// title / location / timeframe. Latest project first.
+const slides = computed(() =>
+  projectsByDate().flatMap((p) => {
+    const text = projectText(p.slug, locale.value)
+    return p.carousel.map(file => ({
       slug: p.slug,
-      src: carouselImg(p.carousel[0]!),
-      title: projectText(p.slug, locale.value).title,
-      meta: p.year
+      src: carouselImg(file),
+      title: text.title,
+      location: text.location,
+      dates: text.dates
     }))
+  })
 )
 </script>
 
 <template>
-  <UPageSection
-    :title="t('title')"
-    :description="t('description')"
-    :ui="{ container: 'py-12 sm:py-16' }"
-  >
+  <UPageSection :ui="{ container: 'py-12 sm:py-16' }">
+    <div class="max-w-2xl">
+      <h2 class="font-serif text-3xl text-highlighted sm:text-4xl">
+        {{ t('title') }}
+      </h2>
+      <p class="mt-3 text-muted">
+        {{ t('description') }}
+      </p>
+    </div>
+
     <UCarousel
       v-slot="{ item }"
-      :items="cards"
+      :items="slides"
+      :autoplay="{ delay: 5000 }"
+      loop
       arrows
-      drag-free
       align="start"
+      class="mt-8"
       :ui="{ item: 'basis-4/5 sm:basis-1/2 lg:basis-1/3' }"
     >
       <ProjectCard
         :slug="item.slug"
         :src="item.src"
         :title="item.title"
-        :meta="item.meta"
+        :location="item.location"
+        :dates="item.dates"
+        layout="carousel"
       />
     </UCarousel>
   </UPageSection>
@@ -41,12 +53,12 @@ const cards = computed(() =>
 <i18n lang="json">
 {
   "en": {
-    "title": "Selected work",
-    "description": "A few projects that capture how I think about form, function and place."
+    "title": "My projects",
+    "description": "A selection of projects that reflect how I think about form, material, use and place."
   },
   "fr": {
-    "title": "Projets sélectionnés",
-    "description": "Quelques projets qui révèlent ma façon de penser la forme, l'usage et le lieu."
+    "title": "Mes projets",
+    "description": "Une sélection de projets qui témoignent de ma manière de penser la forme, la matière, les usages, le lieu."
   }
 }
 </i18n>

@@ -15,7 +15,7 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
     <UPage>
       <UPageHeader
         :title="t('title')"
-        :description="data.headline"
+        :description="t('headline')"
       >
         <template #links>
           <UButton
@@ -32,7 +32,7 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
         <div class="space-y-12">
           <!-- Experience -->
           <section>
-            <h2 class="font-mono text-xs uppercase tracking-wider text-muted">
+            <h2 class="text-xl font-semibold text-highlighted">
               {{ t('experience') }}
             </h2>
             <div class="mt-5 space-y-8">
@@ -41,10 +41,10 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
                 :key="i"
               >
                 <div class="flex flex-wrap items-baseline justify-between gap-x-4">
-                  <h3 class="font-serif text-lg text-highlighted">
+                  <h3 class="text-lg font-medium text-highlighted">
                     {{ e.title }}
                   </h3>
-                  <span class="font-mono text-xs text-dimmed">{{ e.date }}</span>
+                  <span class="text-xs text-dimmed">{{ e.date }}</span>
                 </div>
                 <p class="text-sm text-toned">
                   {{ e.org }} — {{ e.location }}
@@ -63,7 +63,7 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
 
           <!-- Education -->
           <section>
-            <h2 class="font-mono text-xs uppercase tracking-wider text-muted">
+            <h2 class="text-xl font-semibold text-highlighted">
               {{ t('education') }}
             </h2>
             <div class="mt-5 space-y-8">
@@ -72,10 +72,10 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
                 :key="i"
               >
                 <div class="flex flex-wrap items-baseline justify-between gap-x-4">
-                  <h3 class="font-serif text-lg text-highlighted">
+                  <h3 class="text-lg font-medium text-highlighted">
                     {{ e.title }}
                   </h3>
-                  <span class="font-mono text-xs text-dimmed">{{ e.date }}</span>
+                  <span class="text-xs text-dimmed">{{ e.date }}</span>
                 </div>
                 <p class="text-sm text-toned">
                   {{ e.org }} — {{ e.location }}
@@ -94,7 +94,7 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
 
           <!-- Skills -->
           <section>
-            <h2 class="font-mono text-xs uppercase tracking-wider text-muted">
+            <h2 class="text-xl font-semibold text-highlighted">
               {{ t('skills') }}
             </h2>
             <dl class="mt-5 space-y-3">
@@ -115,7 +115,7 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
 
           <!-- Competitions -->
           <section>
-            <h2 class="font-mono text-xs uppercase tracking-wider text-muted">
+            <h2 class="text-xl font-semibold text-highlighted">
               {{ t('competitions') }}
             </h2>
             <ul class="mt-5 space-y-2">
@@ -125,14 +125,14 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
                 class="flex items-baseline justify-between gap-4 text-sm"
               >
                 <span class="text-highlighted">{{ c.title }}</span>
-                <span class="font-mono text-xs text-dimmed">{{ c.date }}</span>
+                <span class="text-xs text-dimmed">{{ c.date }}</span>
               </li>
             </ul>
           </section>
 
           <!-- Interests -->
           <section>
-            <h2 class="font-mono text-xs uppercase tracking-wider text-muted">
+            <h2 class="text-xl font-semibold text-highlighted">
               {{ t('interests') }}
             </h2>
             <p class="mt-3 text-sm text-muted">
@@ -150,6 +150,7 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
   "en": {
     "title": "CV",
     "description": "Education, experience and references.",
+    "headline": "Architect (graduate of ENSA Lyon) and Civil Engineer (graduate of INSA Lyon).",
     "download": "Download CV",
     "experience": "Experience",
     "education": "Education",
@@ -160,6 +161,7 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
   "fr": {
     "title": "CV",
     "description": "Formation, expérience et références.",
+    "headline": "Architecte diplômé de l'ENSA Lyon, et Ingénieur en Génie Civil diplômé de l'INSA Lyon.",
     "download": "Télécharger le CV",
     "experience": "Expérience",
     "education": "Formation",

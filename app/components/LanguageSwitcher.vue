@@ -1,32 +1,28 @@
 <script setup lang="ts">
-import type { DropdownMenuItem } from '@nuxt/ui'
-
 const { locale, locales, setLocale, t } = useI18n()
 
-// setLocale() writes the i18n_redirected cookie *then* navigates, so the
-// default-locale redirect guard on "/" no longer bounces back. A plain
-// switchLocalePath link changed the URL but left the cookie stale.
-const items = computed<DropdownMenuItem[]>(() =>
-  locales.value.map(l => ({
-    label: l.name ?? l.code,
-    trailingIcon: l.code === locale.value ? 'i-lucide-check' : undefined,
-    onSelect: () => setLocale(l.code)
-  }))
-)
+// Single toggle button: flip straight to the other locale. setLocale() writes the
+// i18n_redirected cookie *then* navigates, so the default-locale redirect guard on
+// "/" doesn't bounce back (a plain switchLocalePath link left the cookie stale).
+const other = computed(() => locales.value.find(l => l.code !== locale.value))
+const toggle = () => {
+  if (other.value) {
+    setLocale(other.value.code)
+  }
+}
 </script>
 
 <template>
-  <UDropdownMenu
-    :items="items"
-    :content="{ align: 'end' }"
+  <UButton
+    color="neutral"
+    variant="ghost"
+    :aria-label="t('switch')"
+    @click="toggle"
   >
-    <UButton
-      icon="i-lucide-languages"
-      color="neutral"
-      variant="ghost"
-      :aria-label="t('switch')"
-    />
-  </UDropdownMenu>
+    <span :class="locale === 'fr' ? 'font-semibold text-highlighted' : 'text-dimmed'">FR</span>
+    <span class="text-dimmed">/</span>
+    <span :class="locale === 'en' ? 'font-semibold text-highlighted' : 'text-dimmed'">EN</span>
+  </UButton>
 </template>
 
 <i18n lang="json">
