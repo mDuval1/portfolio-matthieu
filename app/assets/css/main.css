@@ -110,3 +110,18 @@
   --ui-border-accented: color-mix(in srgb, var(--color-sand-900) 28%, transparent);
   --ui-border-inverted: var(--color-sand-900);
 }
+
+/* ============================================================
+   Editorial body copy — justified + hyphenated, the "Sartorial
+   Rigor" print measure. Opt-in (never a blanket `p {}`): only
+   multi-line body paragraphs use it. Headings, metadata, captions,
+   nav and buttons stay left-aligned. Hyphenation needs the active
+   dictionary, which comes from <html lang> (set per locale in app.vue).
+   ============================================================ */
+@layer components {
+  .prose-justify {
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+}

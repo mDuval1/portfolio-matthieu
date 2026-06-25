@@ -19,7 +19,7 @@ useSeoMeta({
           <p class="mt-4 font-sans text-lg text-toned">
             {{ t('hero.subtitle') }}
           </p>
-          <p class="mt-6 text-pretty text-muted">
+          <p class="prose-justify mt-6 text-pretty text-muted">
             {{ t('hero.body') }}
           </p>
         </div>

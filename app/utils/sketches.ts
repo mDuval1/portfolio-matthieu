@@ -373,3 +373,9 @@ export const sketches: Sketch[] = [
     title: { fr: 'Vue d\'un pont ferroviaire vers Perrache', en: 'View of a railway bridge toward Perrache' }
   }
 ]
+
+// Strict descending chronological order (newest first). The ISO `date` — derived
+// from the DD.MM.YY embedded in each source filename at import — drives the sort,
+// so display order never depends on the hand-ordering of the array above.
+export const sketchesByDate = (): Sketch[] =>
+  [...sketches].sort((a, b) => b.date.localeCompare(a.date))

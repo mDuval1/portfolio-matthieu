@@ -26,6 +26,7 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
             <p
               v-for="(p, i) in bio"
               :key="i"
+              class="prose-justify"
             >
               {{ rt(p) }}
             </p>

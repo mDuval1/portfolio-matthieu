@@ -1,8 +1,10 @@
 <script setup lang="ts">
-// Project tile used by the projects grid and the homepage carousel. The image is
-// object-contain (zero crop / zero distortion — the architect's hard rule); the
-// hover scale is applied to the image only, inside an overflow-hidden frame, so
-// the grid never shifts. Metadata layout differs per surface (see `layout`).
+// Project tile used by the projects grid and the homepage carousel. Image fitting
+// is per-surface: the portfolio index grid uses object-cover (carousel covers fill
+// the 4:3 frame edge to edge, no letterboxing) while the carousel keeps
+// object-contain (zero crop). Project detail pages and the lightbox are separate
+// components and remain object-contain. The hover scale is applied to the image
+// only, inside an overflow-hidden frame, so the grid never shifts.
 withDefaults(defineProps<{
   slug: string
   src: string
@@ -29,33 +31,35 @@ const localePath = useLocalePath()
         :alt="title"
         width="600"
         height="450"
-        fit="contain"
+        :fit="layout === 'grid' ? 'cover' : 'contain'"
         format="webp"
         loading="lazy"
         sizes="90vw sm:45vw lg:30vw"
-        class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+        :class="[
+          layout === 'grid' ? 'object-cover' : 'object-contain',
+          'h-full w-full transition-transform duration-500 group-hover:scale-[1.02]'
+        ]"
       />
     </div>
 
-    <!-- Grid: title left, location+date right; typology below the title. -->
+    <!-- Grid: stacked column — title, then metadata, then typology — each on its
+         own line, wrapping within the card (image) width. -->
     <div
       v-if="layout === 'grid'"
-      class="mt-3"
+      class="mt-3 flex flex-col gap-1"
     >
-      <div class="flex items-baseline justify-between gap-3">
-        <p class="font-serif text-lg text-highlighted">
-          {{ title }}
-        </p>
-        <p
-          v-if="location || dates"
-          class="shrink-0 text-right font-sans text-xs uppercase tracking-wider text-muted"
-        >
-          {{ [location, dates].filter(Boolean).join(' · ') }}
-        </p>
-      </div>
+      <p class="text-balance font-serif text-lg leading-snug text-highlighted">
+        {{ title }}
+      </p>
+      <p
+        v-if="location || dates"
+        class="font-sans text-xs uppercase tracking-wider text-muted"
+      >
+        {{ [location, dates].filter(Boolean).join(' · ') }}
+      </p>
       <p
         v-if="typology"
-        class="mt-0.5 font-sans text-sm text-muted"
+        class="text-pretty font-sans text-sm text-muted"
       >
         {{ typology }}
       </p>

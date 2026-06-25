@@ -70,9 +70,14 @@ def main():
             out = f"{base}-{n}.webp"
         used.add(out)
         src_path = os.path.join(SRC, fname)
+        # -auto-orient bakes the EXIF orientation into the pixels and resets the tag.
+        # Without it, phone photos (e.g. the Philadelphia drawings, EXIF orientation 6)
+        # ship a *surviving* orientation tag that browsers re-apply on already-upright
+        # pixels — rendering the sketch on its side. This normalises every sketch to
+        # upright pixels with no orientation metadata (matches scripts/encode-webp.mjs).
         ok = subprocess.run(
-            ["magick", src_path, "-resize", f"{MAXEDGE}x{MAXEDGE}>", "-quality", str(Q),
-             os.path.join(DEST, out)],
+            ["magick", src_path, "-auto-orient", "-resize", f"{MAXEDGE}x{MAXEDGE}>",
+             "-quality", str(Q), os.path.join(DEST, out)],
             stderr=subprocess.DEVNULL,
         ).returncode == 0
         rows.append({"file": out, "date": iso, "country_fr": country,

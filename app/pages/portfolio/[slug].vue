@@ -20,10 +20,12 @@ const metaLine = computed(() =>
 
 // Gallery items, in source order. Caption + lightbox text come from an optional
 // bilingual per-image override, falling back to a humanized filename.
-const tr = (l?: LocalizedText) => (l ? (locale.value === 'fr' ? l.fr : l.en) : undefined)
+const tr = (l?: LocalizedText) => (l ? (locale.value === 'fr' ? l.fr : (l.en ?? l.fr)) : undefined)
 const gallery = computed(() => {
   const p = project.value!
-  return p.gallery.map((file) => {
+  // Ascending by leading number (sketch → final render); a hand-curated array
+  // with no numbers passes through in its existing order.
+  return byLeadingNumber(p.gallery, f => f).map((file) => {
     const override = p.captions?.[file]
     return {
       file,
@@ -45,22 +47,33 @@ useSeoMeta({
 <template>
   <UContainer v-if="project">
     <UPage>
-      <UPageHeader
-        :title="text.title"
-        :description="text.summary"
-      >
-        <template #headline>
+      <UPageBody>
+        <!-- Hero: H1 title → H2 subtitle → metadata → résumé, then the grid. -->
+        <header class="mb-12 max-w-3xl sm:mb-16">
+          <h1 class="font-serif text-3xl leading-tight text-highlighted sm:text-4xl lg:text-5xl">
+            {{ text.title }}
+          </h1>
+          <h2
+            v-if="text.subtitle"
+            class="mt-3 font-sans text-lg font-light leading-relaxed text-toned sm:text-xl"
+          >
+            {{ text.subtitle }}
+          </h2>
           <p
             v-if="metaLine"
-            class="font-sans text-sm uppercase tracking-wider text-muted"
+            class="mt-5 font-sans text-sm uppercase tracking-wider text-muted"
           >
             {{ metaLine }}
           </p>
-        </template>
-      </UPageHeader>
+          <p
+            v-if="text.summary"
+            class="prose-justify mt-5 text-pretty leading-relaxed text-muted"
+          >
+            {{ text.summary }}
+          </p>
+        </header>
 
-      <UPageBody>
-        <!-- Chaptered grid: strict source order, permanent captions, no obscuring hover. -->
+        <!-- Numbered ascending order, permanent captions, no obscuring hover. -->
         <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
           <figure
             v-for="(item, i) in gallery"
@@ -83,10 +96,10 @@ useSeoMeta({
                   class="h-full w-full object-contain"
                 />
               </div>
-              <figcaption class="mt-2 text-left text-xs text-dimmed">
-                {{ item.title }}
-              </figcaption>
             </button>
+            <figcaption class="mt-2 text-left text-xs text-dimmed">
+              {{ item.title }}
+            </figcaption>
           </figure>
         </div>
 

@@ -11,7 +11,9 @@ const cards = computed(() =>
     const text = projectText(p.slug, locale.value)
     return {
       slug: p.slug,
-      src: projectImg(p.folder, p.hero),
+      // Cover thumbnail from the VISUELS CAROUSEL set (first curated select),
+      // falling back to the project hero if a project has no carousel image.
+      src: p.carousel[0] ? carouselImg(p.carousel[0]) : projectImg(p.folder, p.hero),
       title: text.title,
       typology: text.typology,
       location: text.location,

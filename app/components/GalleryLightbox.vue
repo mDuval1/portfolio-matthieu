@@ -4,7 +4,7 @@
 // title and an optional explanatory paragraph. Closes on X, backdrop click or Esc.
 const { t } = useI18n()
 
-interface Item { src: string, title: string, text?: string }
+interface Item { src: string, title: string, eyebrow?: string, text?: string }
 
 const props = defineProps<{
   items: Item[]
@@ -96,12 +96,18 @@ watch(open, (v) => {
 
       <!-- Side panel: stacks below on mobile, fixed column on desktop. -->
       <aside class="w-full shrink-0 overflow-y-auto border-t border-white/15 bg-neutral-950 p-6 text-white sm:p-8 lg:w-96 lg:border-l lg:border-t-0">
-        <h3 class="font-serif text-xl">
+        <p
+          v-if="current.eyebrow"
+          class="font-sans text-xs uppercase tracking-wider text-white/50"
+        >
+          {{ current.eyebrow }}
+        </p>
+        <h3 class="mt-1 font-serif text-xl">
           {{ current.title }}
         </h3>
         <p
           v-if="current.text"
-          class="mt-3 text-sm leading-relaxed text-white/70"
+          class="prose-justify mt-3 text-sm leading-relaxed text-white/70"
         >
           {{ current.text }}
         </p>

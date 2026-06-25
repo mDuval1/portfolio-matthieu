@@ -18,6 +18,7 @@ const items = computed<NavigationMenuItem[]>(() => [
   },
   { label: t('cv'), to: localePath('resume') },
   { label: t('sketches'), to: localePath('sketches') },
+  { label: t('thesis'), to: localePath('thesis') },
   { label: t('about'), to: localePath('about') }
 ])
 </script>
@@ -54,6 +55,7 @@ const items = computed<NavigationMenuItem[]>(() => [
 {
   "en": {
     "portfolio": "Portfolio",
+    "thesis": "Thesis",
     "cv": "CV",
     "sketches": "Sketches",
     "about": "About",
@@ -67,6 +69,7 @@ const items = computed<NavigationMenuItem[]>(() => [
   },
   "fr": {
     "portfolio": "Portfolio",
+    "thesis": "Mémoire",
     "cv": "CV",
     "sketches": "Croquis",
     "about": "À propos",

@@ -13,6 +13,11 @@ export const contact = {
 // Locale-keyed document paths under /media (see scripts/import-visuals.sh).
 export const cvPdf = { en: '/media/cv/cv-matthieu-duval-en.pdf', fr: '/media/cv/cv-matthieu-duval-fr.pdf' }
 export const portfolioPdf = { en: '/media/pdf/portfolio-2026-en.pdf', fr: '/media/pdf/portfolio-2026-fr.pdf' }
+// Research thesis (mémoire d'initiation à la recherche) — a single document used
+// for both locales. Served from Git LFS at build (see CLAUDE.md).
+export const thesisPdf = '/media/pdf/DUVAL_Matthieu_MIR.pdf'
+// External Amazon listing for the printed/bound edition.
+export const thesisPrintUrl = 'https://www.amazon.fr/dp/B0H58QHC1K'
 
 // Portfolio cover render, used as the homepage hero image (see import-visuals.sh).
 export const coverImg = '/media/cover/couverture-portfolio.webp'

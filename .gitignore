@@ -26,3 +26,7 @@ logs
 # Vercel CLI (project link + local build output)
 .vercel
 .env*
+
+# Raw Drive source assets (~766MB) — processed by scripts/import-visuals.sh.
+# Only the generated webp/pdf under public/media are committed.
+_raw_assets/
