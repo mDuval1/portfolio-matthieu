@@ -21,7 +21,7 @@ const abstract = computed(() => tm('abstract') as string[])
               <span class="block text-3xl sm:text-4xl lg:text-5xl">{{ t('titleA') }}</span>
               <span class="mt-2 block text-2xl font-medium sm:text-3xl lg:text-4xl">{{ t('titleB') }}</span>
             </h1>
-            <p class="max-w-3xl text-pretty font-sans text-lg font-light leading-relaxed text-toned sm:text-xl">
+            <p class="max-w-3xl text-pretty font-serif text-lg font-light leading-relaxed text-toned sm:text-xl">
               {{ t('subtitle') }}
             </p>
           </header>

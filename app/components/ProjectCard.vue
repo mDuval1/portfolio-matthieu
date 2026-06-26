@@ -1,10 +1,10 @@
 <script setup lang="ts">
-// Project tile used by the projects grid and the homepage carousel. Image fitting
-// is per-surface: the portfolio index grid uses object-cover (carousel covers fill
-// the 4:3 frame edge to edge, no letterboxing) while the carousel keeps
-// object-contain (zero crop). Project detail pages and the lightbox are separate
-// components and remain object-contain. The hover scale is applied to the image
-// only, inside an overflow-hidden frame, so the grid never shifts.
+// Project tile used by the projects grid and the homepage carousel. Both surfaces
+// use object-cover so the curated cover fills the 4:3 frame edge to edge with no
+// letterboxing (cover crops, never distorts). Project detail pages and the lightbox
+// are separate components and deliberately keep object-contain (zero crop). The
+// hover scale is applied to the image only, inside an overflow-hidden frame, so the
+// grid never shifts.
 withDefaults(defineProps<{
   slug: string
   src: string
@@ -23,7 +23,7 @@ const localePath = useLocalePath()
 <template>
   <NuxtLinkLocale
     :to="localePath({ name: 'portfolio-slug', params: { slug } })"
-    class="group block"
+    class="reveal group block"
   >
     <div class="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[--ui-radius] border border-default bg-elevated">
       <NuxtImg
@@ -31,14 +31,11 @@ const localePath = useLocalePath()
         :alt="title"
         width="600"
         height="450"
-        :fit="layout === 'grid' ? 'cover' : 'contain'"
+        fit="cover"
         format="webp"
         loading="lazy"
         sizes="90vw sm:45vw lg:30vw"
-        :class="[
-          layout === 'grid' ? 'object-cover' : 'object-contain',
-          'h-full w-full transition-transform duration-500 group-hover:scale-[1.02]'
-        ]"
+        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
       />
     </div>
 
@@ -53,13 +50,13 @@ const localePath = useLocalePath()
       </p>
       <p
         v-if="location || dates"
-        class="font-sans text-xs uppercase tracking-wider text-muted"
+        class="font-serif text-xs uppercase tracking-wider text-muted"
       >
         {{ [location, dates].filter(Boolean).join(' · ') }}
       </p>
       <p
         v-if="typology"
-        class="text-pretty font-sans text-sm text-muted"
+        class="text-pretty font-serif text-sm text-muted"
       >
         {{ typology }}
       </p>
@@ -75,13 +72,13 @@ const localePath = useLocalePath()
       </p>
       <p
         v-if="location"
-        class="mt-0.5 font-sans text-sm text-muted"
+        class="mt-0.5 font-serif text-sm text-muted"
       >
         {{ location }}
       </p>
       <p
         v-if="dates"
-        class="font-sans text-xs text-dimmed"
+        class="font-serif text-xs text-dimmed"
       >
         {{ dates }}
       </p>

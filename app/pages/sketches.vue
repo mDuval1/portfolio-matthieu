@@ -68,13 +68,13 @@ const lightboxIndex = ref(-1)
               />
             </button>
             <figcaption class="px-1 pt-2 pb-1">
-              <p class="text-xs uppercase tracking-wide text-muted">
+              <p class="font-serif text-xs uppercase tracking-wide text-muted">
                 {{ place(sketch) }}
               </p>
               <p class="font-serif text-default">
                 {{ tr(sketch.title) }}
               </p>
-              <p class="text-xs text-dimmed">
+              <p class="font-serif text-xs text-dimmed">
                 {{ longDate(sketch.date) }}
               </p>
             </figcaption>

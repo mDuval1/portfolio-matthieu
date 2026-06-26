@@ -18,8 +18,8 @@ const slides = computed(() =>
 </script>
 
 <template>
-  <UPageSection :ui="{ container: 'py-12 sm:py-16' }">
-    <div class="max-w-2xl">
+  <UPageSection :ui="{ container: 'pt-6 pb-12 sm:pt-8 sm:pb-16' }">
+    <div class="reveal max-w-2xl">
       <h2 class="font-serif text-3xl text-highlighted sm:text-4xl">
         {{ t('title') }}
       </h2>

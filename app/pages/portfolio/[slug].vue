@@ -55,13 +55,13 @@ useSeoMeta({
           </h1>
           <h2
             v-if="text.subtitle"
-            class="mt-3 font-sans text-lg font-light leading-relaxed text-toned sm:text-xl"
+            class="mt-3 font-serif text-lg font-light leading-relaxed text-toned sm:text-xl"
           >
             {{ text.subtitle }}
           </h2>
           <p
             v-if="metaLine"
-            class="mt-5 font-sans text-sm uppercase tracking-wider text-muted"
+            class="mt-5 font-serif text-sm uppercase tracking-wider text-muted"
           >
             {{ metaLine }}
           </p>

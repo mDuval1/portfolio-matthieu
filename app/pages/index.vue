@@ -10,13 +10,13 @@ useSeoMeta({
 <template>
   <div>
     <!-- Hero — name + dual title + statement, with the portfolio cover alongside. -->
-    <UPageSection :ui="{ container: 'pt-16 pb-8 sm:pt-24 sm:pb-12' }">
+    <UPageSection :ui="{ container: 'pt-16 pb-2 sm:pt-24 sm:pb-4' }">
       <div class="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
-        <div class="max-w-xl">
+        <div class="reveal max-w-xl">
           <h1 class="font-serif text-5xl tracking-tight text-highlighted sm:text-6xl lg:text-7xl">
             {{ t('hero.title') }}
           </h1>
-          <p class="mt-4 font-sans text-lg text-toned">
+          <p class="mt-4 font-serif text-lg text-toned">
             {{ t('hero.subtitle') }}
           </p>
           <p class="prose-justify mt-6 text-pretty text-muted">
@@ -30,7 +30,8 @@ useSeoMeta({
             width="900"
             format="webp"
             sizes="100vw lg:45vw"
-            class="max-h-[78vh] w-auto rounded-[--ui-radius] border border-default object-contain"
+            data-parallax="0.06"
+            class="shadow-magazine max-h-[78vh] w-auto rounded-[--ui-radius] border border-default object-contain"
           />
         </div>
       </div>

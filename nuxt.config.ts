@@ -6,6 +6,13 @@ export default defineNuxtConfig({
     enabled: true
   },
 
+  // Native page transitions: fade + slight slide-up between routes (CSS in
+  // main.css under `.page-*`). out-in so the old page leaves before the new
+  // enters — no overlap, no layout shift.
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
+
   css: ['~/assets/css/main.css'],
 
   // Light-only site: disable Nuxt UI's color mode entirely. This skips the

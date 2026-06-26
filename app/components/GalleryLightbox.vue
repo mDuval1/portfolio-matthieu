@@ -51,80 +51,82 @@ watch(open, (v) => {
 
 <template>
   <Teleport to="body">
-    <div
-      v-if="open && current"
-      class="fixed inset-0 z-50 flex flex-col bg-black/90 lg:flex-row"
-      role="dialog"
-      aria-modal="true"
-    >
-      <!-- Image area — clicking the empty space (not the image) closes. -->
+    <Transition name="lightbox">
       <div
-        class="relative flex min-h-0 flex-1 items-center justify-center p-4 sm:p-8"
-        @click.self="close"
+        v-if="open && current"
+        class="fixed inset-0 z-50 flex flex-col bg-black/95 lg:flex-row"
+        role="dialog"
+        aria-modal="true"
       >
-        <img
-          :src="current.src"
-          :alt="current.title"
-          class="max-h-full max-w-full object-contain"
+        <!-- Image area — clicking the empty space (not the image) closes. -->
+        <div
+          class="relative flex min-h-0 flex-1 items-center justify-center p-4 sm:p-8"
+          @click.self="close"
         >
+          <img
+            :src="current.src"
+            :alt="current.title"
+            class="lb-image max-h-full max-w-full object-contain"
+          >
+
+          <button
+            v-if="items.length > 1"
+            type="button"
+            class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
+            :aria-label="t('prev')"
+            @click.stop="go(-1)"
+          >
+            <UIcon
+              name="i-lucide-chevron-left"
+              class="size-6"
+            />
+          </button>
+          <button
+            v-if="items.length > 1"
+            type="button"
+            class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
+            :aria-label="t('next')"
+            @click.stop="go(1)"
+          >
+            <UIcon
+              name="i-lucide-chevron-right"
+              class="size-6"
+            />
+          </button>
+        </div>
+
+        <!-- Side panel: stacks below on mobile, fixed column on desktop. -->
+        <aside class="lb-panel w-full shrink-0 overflow-y-auto border-t border-white/15 bg-neutral-950 p-6 text-white sm:p-8 lg:w-96 lg:border-l lg:border-t-0">
+          <p
+            v-if="current.eyebrow"
+            class="font-sans text-xs uppercase tracking-wider text-white/50"
+          >
+            {{ current.eyebrow }}
+          </p>
+          <h3 class="mt-1 font-serif text-xl">
+            {{ current.title }}
+          </h3>
+          <p
+            v-if="current.text"
+            class="prose-justify mt-3 text-sm leading-relaxed text-white/70"
+          >
+            {{ current.text }}
+          </p>
+        </aside>
 
         <button
-          v-if="items.length > 1"
           type="button"
-          class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
-          :aria-label="t('prev')"
-          @click.stop="go(-1)"
+          class="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
+          :aria-label="t('close')"
+          @click="close"
         >
           <UIcon
-            name="i-lucide-chevron-left"
-            class="size-6"
-          />
-        </button>
-        <button
-          v-if="items.length > 1"
-          type="button"
-          class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
-          :aria-label="t('next')"
-          @click.stop="go(1)"
-        >
-          <UIcon
-            name="i-lucide-chevron-right"
+            name="i-lucide-x"
             class="size-6"
           />
         </button>
       </div>
-
-      <!-- Side panel: stacks below on mobile, fixed column on desktop. -->
-      <aside class="w-full shrink-0 overflow-y-auto border-t border-white/15 bg-neutral-950 p-6 text-white sm:p-8 lg:w-96 lg:border-l lg:border-t-0">
-        <p
-          v-if="current.eyebrow"
-          class="font-sans text-xs uppercase tracking-wider text-white/50"
-        >
-          {{ current.eyebrow }}
-        </p>
-        <h3 class="mt-1 font-serif text-xl">
-          {{ current.title }}
-        </h3>
-        <p
-          v-if="current.text"
-          class="prose-justify mt-3 text-sm leading-relaxed text-white/70"
-        >
-          {{ current.text }}
-        </p>
-      </aside>
-
-      <button
-        type="button"
-        class="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
-        :aria-label="t('close')"
-        @click="close"
-      >
-        <UIcon
-          name="i-lucide-x"
-          class="size-6"
-        />
-      </button>
-    </div>
+    </Transition>
   </Teleport>
 </template>
 
