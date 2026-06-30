@@ -112,18 +112,15 @@ copy_first "$REPO/public/media/cv/cv-matthieu-duval-en.pdf" "$SRC/CV_Matthieu_DU
 copy_first "$REPO/public/media/cv/cv-matthieu-duval-fr.pdf" "$SRC/CV_Matthieu_DUVAL_FR.pdf" "$SRC/PDF A EMBED/CV_Matthieu_DUVAL_FR.pdf"
 
 echo "### PORTFOLIO + THESIS PDFs (large → Git LFS; if present) ###"
-# Final web-optimised portfolio exports: "PDF A EMBED/PORTFOLIO_{ENG,FR}.pdf".
-# Older candidates kept as fallbacks for re-runs against earlier asset drops.
-copy_first "$REPO/public/media/pdf/portfolio-2026-en.pdf" \
-  "$SRC/PDF A EMBED/PORTFOLIO_ENG.pdf" \
-  "$SRC/PORTFOLIO PDF/PORTFOLIO JUIN 26 ENG.pdf" \
-  "$SRC/PDF A EMBED/Portfolio Architecture Matthieu 2026 ENG.pdf"
-copy_first "$REPO/public/media/pdf/portfolio-2026-fr.pdf" \
-  "$SRC/PDF A EMBED/PORTFOLIO_FR.pdf" \
-  "$SRC/PORTFOLIO PDF/PORTFOLIO JUIN 26 FR.pdf" \
-  "$SRC/PDF A EMBED/Portfolio Architecture Matthieu 2026 FR.pdf"
-copy_first "$REPO/public/media/pdf/DUVAL_Matthieu_MIR.pdf" \
-  "$SRC/PDF A EMBED/Duval_Matthieu_MIR.pdf" \
-  "$SRC/PDF A EMBED/memoire_Amazon FINAL.pdf"
+# Two formats per document, copied under their exact names:
+#   *_Spreads.pdf → download / open in new tab     (print double-page layout)
+#   PORTFOLIO_{ENG,FR}.pdf / MEMOIRE_VIEWER.pdf → embedded single-page reader
+P="$SRC/PDF A EMBED"
+for f in \
+  PORTFOLIO_ENG.pdf PORTFOLIO_ENG_Spreads.pdf \
+  PORTFOLIO_FR.pdf PORTFOLIO_FR_Spreads.pdf \
+  Duval_Matthieu_MIR.pdf MEMOIRE_VIEWER.pdf; do
+  copy_first "$REPO/public/media/pdf/$f" "$P/$f"
+done
 
 echo "### DONE ###"

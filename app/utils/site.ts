@@ -12,10 +12,22 @@ export const contact = {
 
 // Locale-keyed document paths under /media (see scripts/import-visuals.sh).
 export const cvPdf = { en: '/media/cv/cv-matthieu-duval-en.pdf', fr: '/media/cv/cv-matthieu-duval-fr.pdf' }
-export const portfolioPdf = { en: '/media/pdf/portfolio-2026-en.pdf', fr: '/media/pdf/portfolio-2026-fr.pdf' }
-// Research thesis (mémoire d'initiation à la recherche) — a single document used
-// for both locales. Served from Git LFS at build (see CLAUDE.md).
-export const thesisPdf = '/media/pdf/DUVAL_Matthieu_MIR.pdf'
+
+// Portfolio PDFs per locale: `download` is the print "spreads" export (download /
+// open in new tab); `view` is the single-page export optimised for the embedded
+// reader. Language follows the global app locale.
+export const portfolioPdf = {
+  en: { download: '/media/pdf/PORTFOLIO_ENG_Spreads.pdf', view: '/media/pdf/PORTFOLIO_ENG.pdf' },
+  fr: { download: '/media/pdf/PORTFOLIO_FR_Spreads.pdf', view: '/media/pdf/PORTFOLIO_FR.pdf' }
+} as const
+
+// Research thesis (mémoire). Same download document in both locales; a dedicated
+// single-page export feeds the embedded reader. Served from Git LFS (see CLAUDE.md).
+export const thesisPdf = {
+  download: '/media/pdf/Duval_Matthieu_MIR.pdf',
+  view: '/media/pdf/MEMOIRE_VIEWER.pdf'
+} as const
+
 // External Amazon listing for the printed/bound edition.
 export const thesisPrintUrl = 'https://www.amazon.fr/dp/B0H58QHC1K'
 

@@ -46,14 +46,14 @@ const showReader = ref(false)
           <!-- C. Action buttons — terracotta download + open + view + printed edition -->
           <div class="mt-14 flex flex-wrap gap-3 sm:mt-16">
             <UButton
-              :to="thesisPdf"
+              :to="thesisPdf.download"
               external
-              download="DUVAL_Matthieu_MIR.pdf"
+              download="Duval_Matthieu_MIR.pdf"
               icon="i-lucide-download"
               :label="t('download')"
             />
             <UButton
-              :to="thesisPdf"
+              :to="thesisPdf.download"
               target="_blank"
               rel="noopener noreferrer"
               external
@@ -87,7 +87,7 @@ const showReader = ref(false)
               class="mt-10"
             >
               <PdfSpreadViewer
-                :src="thesisPdf"
+                :src="thesisPdf.view"
                 :title="t('titleA')"
               />
             </div>
