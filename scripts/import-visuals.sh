@@ -92,12 +92,38 @@ echo "### FONTS (copy ttf as-is) ###"
 mkdir -p "$REPO/app/assets/fonts"
 [ -d "$SRC/FONTS" ] && cp "$SRC/FONTS/"*.ttf "$REPO/app/assets/fonts/" 2>/dev/null && echo "  copied ttf" || echo "  (no fonts)"
 
-echo "### CVs + BIG PDFs (if present) ###"
+# Copy the first candidate source that exists to $dest. Usage: copy_first DEST SRC1 [SRC2 ...]
+copy_first() {
+  local dest="$1"; shift
+  local f
+  for f in "$@"; do
+    if [ -f "$f" ]; then
+      cp "$f" "$dest" && printf '  %-26s <- %s\n' "$(basename "$dest")" "$(basename "$f")"
+      return 0
+    fi
+  done
+  printf '  !! missing: %s (looked for: %s)\n' "$(basename "$dest")" "$*"
+  return 1
+}
+
+echo "### CVs (if present) ###"
 mkdir -p "$REPO/public/media/cv" "$REPO/public/media/pdf"
-cp "$SRC/CV_Matthieu_DUVAL_ENG.pdf" "$REPO/public/media/cv/cv-matthieu-duval-en.pdf" 2>/dev/null || true
-cp "$SRC/CV_Matthieu_DUVAL_FR.pdf"  "$REPO/public/media/cv/cv-matthieu-duval-fr.pdf" 2>/dev/null || true
-cp "$SRC/Portfolio Architecture Matthieu 2026 ENG.pdf" "$REPO/public/media/pdf/portfolio-2026-en.pdf" 2>/dev/null || true
-cp "$SRC/Portfolio Architecture Matthieu 2026 FR.pdf"  "$REPO/public/media/pdf/portfolio-2026-fr.pdf" 2>/dev/null || true
-cp "$SRC/PDF A EMBED/memoire_Amazon FINAL.pdf"         "$REPO/public/media/pdf/DUVAL_Matthieu_MIR.pdf" 2>/dev/null || true
+copy_first "$REPO/public/media/cv/cv-matthieu-duval-en.pdf" "$SRC/CV_Matthieu_DUVAL_ENG.pdf" "$SRC/PDF A EMBED/CV_Matthieu_DUVAL_ENG.pdf"
+copy_first "$REPO/public/media/cv/cv-matthieu-duval-fr.pdf" "$SRC/CV_Matthieu_DUVAL_FR.pdf" "$SRC/PDF A EMBED/CV_Matthieu_DUVAL_FR.pdf"
+
+echo "### PORTFOLIO + THESIS PDFs (large → Git LFS; if present) ###"
+# Final web-optimised portfolio exports: "PDF A EMBED/PORTFOLIO_{ENG,FR}.pdf".
+# Older candidates kept as fallbacks for re-runs against earlier asset drops.
+copy_first "$REPO/public/media/pdf/portfolio-2026-en.pdf" \
+  "$SRC/PDF A EMBED/PORTFOLIO_ENG.pdf" \
+  "$SRC/PORTFOLIO PDF/PORTFOLIO JUIN 26 ENG.pdf" \
+  "$SRC/PDF A EMBED/Portfolio Architecture Matthieu 2026 ENG.pdf"
+copy_first "$REPO/public/media/pdf/portfolio-2026-fr.pdf" \
+  "$SRC/PDF A EMBED/PORTFOLIO_FR.pdf" \
+  "$SRC/PORTFOLIO PDF/PORTFOLIO JUIN 26 FR.pdf" \
+  "$SRC/PDF A EMBED/Portfolio Architecture Matthieu 2026 FR.pdf"
+copy_first "$REPO/public/media/pdf/DUVAL_Matthieu_MIR.pdf" \
+  "$SRC/PDF A EMBED/Duval_Matthieu_MIR.pdf" \
+  "$SRC/PDF A EMBED/memoire_Amazon FINAL.pdf"
 
 echo "### DONE ###"

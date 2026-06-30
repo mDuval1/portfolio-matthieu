@@ -8,6 +8,9 @@ useSeoMeta({
 
 // Abstract paragraphs as an i18n array (resolved with rt in the template).
 const abstract = computed(() => tm('abstract') as string[])
+
+// Integrated double-page spread reader, opened on demand.
+const showReader = ref(false)
 </script>
 
 <template>
@@ -40,7 +43,7 @@ const abstract = computed(() => tm('abstract') as string[])
             </p>
           </div>
 
-          <!-- C. Action buttons — terracotta download + open + printed edition -->
+          <!-- C. Action buttons — terracotta download + open + view + printed edition -->
           <div class="mt-14 flex flex-wrap gap-3 sm:mt-16">
             <UButton
               :to="thesisPdf"
@@ -52,6 +55,7 @@ const abstract = computed(() => tm('abstract') as string[])
             <UButton
               :to="thesisPdf"
               target="_blank"
+              rel="noopener noreferrer"
               external
               icon="i-lucide-external-link"
               color="neutral"
@@ -59,13 +63,35 @@ const abstract = computed(() => tm('abstract') as string[])
               :label="t('open')"
             />
             <UButton
+              icon="i-lucide-book-open"
+              color="neutral"
+              variant="ghost"
+              :aria-expanded="showReader"
+              :label="showReader ? t('hide') : t('view')"
+              @click="showReader = !showReader"
+            />
+            <UButton
               :to="thesisPrintUrl"
               target="_blank"
+              rel="noopener noreferrer"
               external
               icon="i-lucide-book"
               :label="t('print')"
             />
           </div>
+
+          <!-- Integrated double-page spread reader -->
+          <ClientOnly>
+            <div
+              v-if="showReader"
+              class="mt-10"
+            >
+              <PdfSpreadViewer
+                :src="thesisPdf"
+                :title="t('titleA')"
+              />
+            </div>
+          </ClientOnly>
         </article>
       </UPageBody>
     </UPage>
@@ -85,6 +111,8 @@ const abstract = computed(() => tm('abstract') as string[])
     ],
     "download": "Download PDF",
     "open": "Open in a new tab",
+    "view": "View here",
+    "hide": "Close reader",
     "print": "Get the printed edition"
   },
   "fr": {
@@ -98,6 +126,8 @@ const abstract = computed(() => tm('abstract') as string[])
     ],
     "download": "Télécharger le PDF",
     "open": "Ouvrir dans un nouvel onglet",
+    "view": "Lire ici",
+    "hide": "Fermer le lecteur",
     "print": "Obtenir la version papier"
   }
 }

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-// Reusable bound-portfolio PDF block: download / open / inline reader.
+// Bound-portfolio PDF block: pick a language (FR/EN), then three actions —
+// Download / Open in new tab / View here (the integrated pdf.js spread reader).
 // Section copy (eyebrow/title/description) is passed in so the home page and the
-// projects page can frame it differently; the action labels live here.
+// portfolio page can frame it differently; the action labels live here.
 defineProps<{
   eyebrow?: string
   title: string
@@ -10,7 +11,10 @@ defineProps<{
 
 const { t, locale } = useI18n()
 
-const pdf = computed(() => portfolioPdf[locale.value === 'fr' ? 'fr' : 'en'])
+// Default the document language to the active site locale; the reader reloads
+// when the choice changes (keyed below).
+const lang = ref<'en' | 'fr'>(locale.value === 'fr' ? 'fr' : 'en')
+const pdf = computed(() => portfolioPdf[lang.value])
 const showReader = ref(false)
 </script>
 
@@ -35,17 +39,39 @@ const showReader = ref(false)
       {{ t('note') }}
     </p>
 
-    <div class="mt-6 flex flex-wrap gap-3">
+    <!-- 1) Language selector -->
+    <div class="mt-6 flex items-center gap-3">
+      <span class="font-sans text-xs uppercase tracking-wider text-muted">
+        {{ t('language') }}
+      </span>
+      <div class="inline-flex rounded-[--ui-radius] border border-default p-0.5">
+        <button
+          v-for="code in (['fr', 'en'] as const)"
+          :key="code"
+          type="button"
+          class="rounded-[--ui-radius] px-3 py-1 font-sans text-xs uppercase tracking-wider transition-colors"
+          :class="lang === code ? 'bg-elevated text-highlighted' : 'text-muted hover:text-highlighted'"
+          :aria-pressed="lang === code"
+          @click="lang = code"
+        >
+          {{ code }}
+        </button>
+      </div>
+    </div>
+
+    <!-- 2) Exactly three actions, operating on the selected language -->
+    <div class="mt-4 flex flex-wrap gap-3">
       <UButton
         :to="pdf"
         external
-        :download="`portfolio-matthieu-duval-${locale}.pdf`"
+        :download="`portfolio-matthieu-duval-${lang}.pdf`"
         icon="i-lucide-download"
         :label="t('download')"
       />
       <UButton
         :to="pdf"
         target="_blank"
+        rel="noopener noreferrer"
         external
         icon="i-lucide-external-link"
         color="neutral"
@@ -56,27 +82,24 @@ const showReader = ref(false)
         icon="i-lucide-book-open"
         color="neutral"
         variant="ghost"
-        :label="showReader ? t('hide') : t('read')"
+        :aria-expanded="showReader"
+        :label="showReader ? t('hide') : t('view')"
         @click="showReader = !showReader"
       />
     </div>
 
+    <!-- 3) Integrated reader (client-only; reloads when the language changes) -->
     <ClientOnly>
-      <object
+      <div
         v-if="showReader"
-        :data="pdf"
-        type="application/pdf"
-        class="mt-6 h-[80vh] w-full rounded-[--ui-radius] border border-default"
+        class="mt-8"
       >
-        <p class="p-4 text-muted">
-          {{ t('fallback') }}
-          <ULink
-            :to="pdf"
-            target="_blank"
-            external
-          >{{ t('open') }}</ULink>
-        </p>
-      </object>
+        <PdfSpreadViewer
+          :key="lang"
+          :src="pdf"
+          :title="title"
+        />
+      </div>
     </ClientOnly>
   </section>
 </template>
@@ -84,20 +107,20 @@ const showReader = ref(false)
 <i18n lang="json">
 {
   "en": {
-    "note": "Large file (~50 MB) — best opened on desktop or downloaded.",
+    "note": "Web-optimised PDF (~7 MB).",
+    "language": "Language",
     "download": "Download PDF",
     "open": "Open in new tab",
-    "read": "Read here",
-    "hide": "Hide reader",
-    "fallback": "Your browser can't display the PDF inline."
+    "view": "View here",
+    "hide": "Close reader"
   },
   "fr": {
-    "note": "Fichier volumineux (~50 Mo) — à ouvrir sur ordinateur ou à télécharger.",
+    "note": "PDF optimisé pour le web (~7 Mo).",
+    "language": "Langue",
     "download": "Télécharger le PDF",
     "open": "Ouvrir dans un nouvel onglet",
-    "read": "Lire ici",
-    "hide": "Masquer le lecteur",
-    "fallback": "Votre navigateur ne peut pas afficher le PDF en ligne."
+    "view": "Lire ici",
+    "hide": "Fermer le lecteur"
   }
 }
 </i18n>
