@@ -114,17 +114,19 @@
 }
 
 /* ============================================================
-   Editorial body copy — justified + hyphenated, the "Sartorial
-   Rigor" print measure. Opt-in (never a blanket `p {}`): only
-   multi-line body paragraphs use it. Headings, metadata, captions,
-   nav and buttons stay left-aligned. Hyphenation needs the active
-   dictionary, which comes from <html lang> (set per locale in app.vue).
+   Editorial body copy — justified, the "Sartorial Rigor" print
+   measure. Opt-in (never a blanket `p {}`): only multi-line body
+   paragraphs use it. Headings, metadata, captions, nav and buttons
+   stay left-aligned. Hyphenation is disabled so no word is ever
+   split across a line — whole words only, even when justified.
    ============================================================ */
 @layer components {
   .prose-justify {
     text-align: justify;
-    hyphens: auto;
-    -webkit-hyphens: auto;
+    hyphens: none;
+    -webkit-hyphens: none;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 
   /* Magazine cover: a soft warm drop shadow so the white cover lifts off the

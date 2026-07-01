@@ -19,9 +19,17 @@ useSeoMeta({
           <p class="mt-4 font-serif text-lg text-toned">
             {{ t('hero.subtitle') }}
           </p>
-          <p class="prose-justify mt-6 text-pretty text-muted">
-            {{ t('hero.body') }}
-          </p>
+          <!-- {loci} slot italicises the Latin term without putting HTML in the
+               translation message (unplugin-vue-i18n rejects HTML in messages). -->
+          <i18n-t
+            keypath="hero.body"
+            tag="p"
+            class="prose-justify mt-6 text-pretty text-muted"
+          >
+            <template #loci>
+              <em>genius loci</em>
+            </template>
+          </i18n-t>
         </div>
         <div class="flex justify-center lg:justify-end">
           <NuxtImg
@@ -57,7 +65,7 @@ useSeoMeta({
     "hero": {
       "title": "Matthieu Duval",
       "subtitle": "Architect (ENSA Lyon) & Engineer (INSA Lyon)",
-      "body": "My dual training as architect and engineer lets me reconcile architectural ambition with the reality of engineering constraints. My personal stance is rooted in the pursuit of a critical neo-regionalism and bioclimatic design — a sensitive architecture, deeply respectful of the genius of place, where the poetry of material accompanies that of form.",
+      "body": "At the intersection of architecture and engineering, my approach refuses to compromise between spatial ambition and structural rigor. Committed to bioclimatic design and critical neo-regionalism, I envision each project as a framework in direct dialogue with its environment. It is a sensitive and measured architecture, deeply attuned to the {loci}, where rich materiality intimately engages with the lines of its volumes.",
       "imageAlt": "Portfolio cover"
     },
     "portfolio": {
@@ -70,7 +78,7 @@ useSeoMeta({
     "hero": {
       "title": "Matthieu Duval",
       "subtitle": "Architecte (ENSA Lyon) & Ingénieur (INSA Lyon)",
-      "body": "Ma double formation d'architecte et d'ingénieur me permet de concilier l'ambition architecturale avec la réalité des contraintes d'ingénierie. Ma posture personnelle s'ancre dans la poursuite d'un néo-régionalisme critique et d'une conception bioclimatique. Une architecture sensible, profondément respectueuse du génie du lieu - dont la poésie de la matière accompagne celle de la forme.",
+      "body": "À la croisée entre l'architecture et l'ingénierie, mon approche de la conception architecturale refuse le compromis entre l'ambition spatiale et la rigueur constructive. Engagé en faveur d'une conception bioclimatique et d'un néo-régionalisme critique, j'envisage chaque projet comme une matrice en dialogue direct avec son environnement. Une architecture sensible et mesurée, à l'écoute du {loci}, dont la riche matérialité dialogue intimement avec les lignes de ses volumes.",
       "imageAlt": "Couverture du portfolio"
     },
     "portfolio": {

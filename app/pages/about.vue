@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t, locale, tm, rt } = useI18n()
+const { t, locale, tm } = useI18n()
 const localePath = useLocalePath()
 
 useSeoMeta({
@@ -23,13 +23,20 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
         <div class="grid gap-12 lg:grid-cols-[1.6fr_1fr]">
           <!-- Bio -->
           <div class="max-w-2xl space-y-5 text-pretty text-muted">
-            <p
+            <!-- i18n-t per paragraph so bio[0]'s {loci} slot can italicise the
+                 school name without HTML in the message (rejected by the compiler);
+                 paragraphs without {loci} just ignore the unused slot. -->
+            <i18n-t
               v-for="(p, i) in bio"
               :key="i"
+              :keypath="`bio[${i}]`"
+              tag="p"
               class="prose-justify"
             >
-              {{ rt(p) }}
-            </p>
+              <template #loci>
+                <em>Politecnico di Milano</em>
+              </template>
+            </i18n-t>
             <UButton
               class="mt-2"
               :to="localePath('resume')"
@@ -97,12 +104,12 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
 {
   "en": {
     "title": "About",
-    "description": "A young architect and civil engineer working at the intersection of craft, context and care.",
+    "description": "Architect & Civil Engineer — A Cross-Disciplinary Profile",
     "bio": [
-      "A graduate in architecture (ENSA Lyon — June 2026) and civil engineering (INSA Lyon — August 2024), with a year at the Politecnico di Milano, I work at the interface between the creativity of architectural design and the reality of engineering studies. I see my practice as a bridge between these two worlds, refusing any compromise between the poetry of a space and the demands of its feasibility.",
-      "A proponent of critical neo-regionalism and bioclimatic architecture, my design process always begins with a will to understand the environment in which — and for which — I build. The first ideas then take shape on tracing paper or on paper, giving form to the chosen approach. My strength lies in moving freely from one design medium to another: I work fluidly with drawing, the graphics tablet, digital modelling (Revit, Rhino), parametric modelling (Dynamo, Grasshopper), through to the use of the latest technologies (AI) in my workflows.",
-      "With 18 months of cumulative agency experience in South-East Asia across varied programmes, I have developed an autonomy and a versatility that translate into a strong capacity to adapt. My prior experience in project management and business development (Junior Enterprise) also lets me approach each project with a strategic, business-oriented vision.",
-      "Today I am preparing my return to South-East Asia, with a privileged anchor in HCMC, Vietnam. I am reaching out to international agencies seeking a cross-disciplinary profile — able to carry architectural design, the resolution of complex details and technical coordination — where architecture and engineering speak to one another in the service of exceptional projects."
+      "Holding degrees in Architecture (ENSA Lyon, 2026) and Civil Engineering (INSA Lyon, 2024), my academic background was further enriched by a year of immersion at the {loci}. Today, I thus operate at the intersection of spatial creativity and constructive reality. I view my practice as a bridge between these two disciplines, refusing any compromise between the poetry of a space and the demands of its feasibility.",
+      "Committed to critical neo-regionalism and bioclimatic design, my creative process always begins with a deep reading of the environment for which I build. Initial concepts consistently emerge on tracing paper or in a sketchbook, capturing the pure essence of the design intent. My core strength lies in a seamless transition across mediums: from the sensitivity of a pencil stroke to parametric modeling (Dynamo, Grasshopper), encompassing rigorous BIM workflows (Revit, Rhino) and the intelligent integration of AI into my design and rendering processes.",
+      "Building on 18 months of cumulative agency experience across Southeast Asia on diverse programs, I have developed a cross-disciplinary approach that translates into strong operational autonomy. Furthermore, my background in project management and business development allows me to approach every project with a strategic, overarching vision that is highly attuned to the economic realities of the industry.",
+      "Today, I am preparing for my definitive relocation to Southeast Asia, firmly anchoring myself in Ho Chi Minh City. I am looking to connect with international agencies seeking a hybrid professional—someone capable of driving architectural design, resolving complex detailing, and ensuring advanced technical coordination—where architecture and engineering converse to deliver exceptional projects."
     ],
     "contact": "Contact",
     "viewCv": "Read the full CV",
@@ -111,12 +118,12 @@ const cv = computed(() => cvPdf[locale.value === 'fr' ? 'fr' : 'en'])
   },
   "fr": {
     "title": "À propos",
-    "description": "Un jeune architecte et ingénieur en génie civil à la croisée du métier, du contexte et de l'attention.",
+    "description": "Architecte & Ingénieur Civil — Un profil hybride et transversal",
     "bio": [
-      "Diplômé en architecture (ENSA Lyon - juin 2026) et en génie civil (INSA Lyon août 2024), avec un parcours enrichi par une année à l'école Politecnico di Milano, j'évolue à l'interface entre la créativité de la conception architecturale et la réalité des études d'ingénierie. Je conçois ma pratique comme un pont entre ces deux mondes, refusant tout compromis entre la poésie d'un espace et l'exigence de sa faisabilité.",
-      "Adepte du néo-régionalisme critique et de l'architecture bioclimatique, mon processus de conception commence systématiquement par une volonté de comprendre l'environnement dans lequel et pour lequel je construis. Les premières idées naissent ensuite sur le calque ou le papier, matérialisation du parti pris et des idées retenus. Ma force réside dans la capacité de passer d'un support de conception à l'autre. Je manie librement le dessin, la tablette graphique, la modélisation numérique (Revit, Rhino), la modélisation paramétrique (Dynamo, Grasshopper) jusqu'à l'emploi des dernières technologies (IA) dans mes flux de travail.",
-      "Fort de 18 mois d'expérience cumulée en agence en Asie du Sud-Est, sur des programmes variés, j'ai développé une autonomie et une transversalité qui s'incarnent dans une grande capacité d'adaptation. Mon expérience préalable en management de projet et développement commercial (Junior-Entreprise) me permet en outre d'aborder chaque projet avec une vision stratégique et « business-oriented ».",
-      "Aujourd'hui, je prépare mon retour en Asie du Sud-Est, avec un ancrage privilégié à HCMC au Vietnam. Je m'adresse aux agences internationales à la recherche d'un profil transversal — capable d'assurer la conception architecturale, la résolution de détails complexes et la coordination technique — là où l'architecture et l'ingénierie dialoguent au service de projets d'exception."
+      "Diplômé en architecture (ENSA Lyon, 2026) et en génie civil (INSA Lyon, 2024), mon parcours a notamment été enrichi par une année d'immersion à l'école polytechnique de Milan ({loci}). J'évolue aujourd'hui à l'intersection entre la créativité de la conception architecturale et la réalité concrète des études constructives. Je conçois ma pratique comme un pont entre ces deux disciplines, refusant le moindre compromis entre la poésie d'un espace et l'exigence de sa faisabilité.",
+      "Adepte d'un néo-régionalisme critique et d'une conception bioclimatique, mon processus de création s'ancre d'abord dans une lecture intime de l'environnement pour lequel je construis. Les premières intuitions naissent systématiquement sur le calque ou le papier, matérialisant l'essence du parti pris. Ma véritable force réside ensuite dans ma capacité à transiter avec fluidité d'un support à l'autre : de la sensibilité du trait de crayon à la modélisation paramétrique (Dynamo, Grasshopper), en passant par la rigueur du BIM (Revit, Rhino) et l'intégration intelligente de l'intelligence artificielle au sein de mes flux de travail.",
+      "Fort de 18 mois d'expérience cumulée en agence en Asie du Sud-Est sur des programmes variés, j'ai développé une transversalité qui s'incarne dans une grande autonomie opérationnelle. Par ailleurs, mon expérience en management de projet et développement commercial m'amène à aborder chaque projet avec une vision stratégique et globale, résolument orientée vers les réalités économiques du métier.",
+      "Aujourd'hui, je planifie mon installation définitive en Asie du Sud-Est, avec un ancrage fort à Hô Chi Minh-Ville. Je m'adresse aux agences internationales à la recherche d'un collaborateur hybride, capable de piloter la conception architecturale, de résoudre des détails complexes et d'assurer une coordination technique de pointe — là où l'architecture et l'ingénierie dialoguent au service de projets d'exception."
     ],
     "contact": "Contact",
     "viewCv": "Lire le CV complet",
